@@ -1,0 +1,22 @@
+{
+  "index": {
+    "title": "Home",
+    "type": "page"
+  },
+  "admin-guide": {
+    "title": "Admin guide",
+    "type": "page"
+  },
+  "user-guide": {
+    "title": "User guide",
+    "type": "page"
+  },
+  "developers": {
+    "title": "Developers",
+    "type": "page"
+  },
+  "archive": {
+    "title": "Archive docs",
+    "type": "page"
+  }
+}
