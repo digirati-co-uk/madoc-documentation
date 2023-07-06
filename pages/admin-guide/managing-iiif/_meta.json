@@ -1,6 +1,6 @@
 {
-  "importing": "Importing IIIF 🚧",
   "iiif-in-madoc": "IIIF in Madoc",
+  "importing": "Importing IIIF",
   "--": { "type": "separator", "title": "Resource types" },
   "collections": "Collections",
   "manifests": "Manifests",

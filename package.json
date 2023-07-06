@@ -18,14 +18,25 @@
   },
   "homepage": "https://github.com/digirati-co-uk/madoc-documentation#readme",
   "dependencies": {
+    "@iiif/parser": "https://pkg.csb.dev/IIIF-Commons/parser/commit/9c888e0c/@iiif/parser",
+    "@iiif/presentation-3": "^2.0.5",
+    "@iiif/presentation-3-normalized": "^0.9.7",
+    "@iiif/vault": "https://pkg.csb.dev/IIIF-Commons/vault/commit/4fdd7a3b/@iiif/vault",
+    "@iiif/vault-helpers": "https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/e9d41f61/@iiif/vault-helpers",
+    "@manifest-editor/iiif-browser": "https://pkg.csb.dev/digirati-co-uk/iiif-manifest-editor/commit/4c25ea4d/@manifest-editor/iiif-browser",
+    "autoprefixer": "^10.4.14",
     "next": "^13.0.6",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
+    "postcss": "^8.4.25",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-iiif-vault": "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/7c770a3e/react-iiif-vault",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
     "@types/node": "18.11.10",
+    "prettier": "^3.0.0",
     "typescript": "^4.9.3"
   }
 }
