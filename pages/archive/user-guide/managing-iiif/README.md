@@ -1,6 +1,6 @@
 # Managing IIIF
 
-![](</public/assets/image (7).png>)
+![](</assets/image (7).png>)
 
 The primary building block for content in Madoc is IIIF (International Image Interoperability Framework™). IIIF is a set of open standards for standardising access to images and collections of images. There are 3 primary building blocks that make up IIIF.
 

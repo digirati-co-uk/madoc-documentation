@@ -88,19 +88,19 @@ The links to the specification are considered canonical using the "http" protoco
 
 When you import a Manifest into Madoc, you will see the following additional sections following your list of canvases. This indicates that Madoc has searched for OCR to import. It does not mean that it found OCR.
 
-![The task page when importing a Manifest](</public/assets/Screenshot 2022-02-28 at 20.35.00.png>)
+![The task page when importing a Manifest](</assets/Screenshot 2022-02-28 at 20.35.00.png>)
 
 If Madoc finds compatible OCR, following the link above will show a screen showing the import static of each page of your Manifest.
 
-![](</public/assets/Screenshot 2022-02-28 at 20.36.51.png>)
+![](</assets/Screenshot 2022-02-28 at 20.36.51.png>)
 
 When viewing a Manifest in the Admin, you can see the status of the OCR and the formats that have been detected.
 
-![](</public/assets/Screenshot 2022-02-28 at 20.45.31.png>)
+![](</assets/Screenshot 2022-02-28 at 20.45.31.png>)
 
 When viewing each individual Canvas you can see both the original OCR document and the converted capture model that can be used as the basis for corrections.
 
-![](</public/assets/Screenshot 2022-02-28 at 20.46.43.png>)
+![](</assets/Screenshot 2022-02-28 at 20.46.43.png>)
 
 {% hint style="info" %}
 If you choose "Save to madoc" you can store a local copy of the hOCR or Alto XML to Madoc. You will be able to edit as plaintext and paste in a new XML document. We don't offer the ability to add new linking properties at the moment. This functionality is also available through the Madoc API.
@@ -108,7 +108,7 @@ If you choose "Save to madoc" you can store a local copy of the hOCR or Alto XML
 
 If you click on the "OCR Capture model data" link you will see a preview of what the capture model will look like to your contributors.
 
-![This a read-only preview of your capture model generated from your OCR.](</public/assets/Screenshot 2022-02-28 at 20.49.22.png>)
+![This a read-only preview of your capture model generated from your OCR.](</assets/Screenshot 2022-02-28 at 20.49.22.png>)
 
 This can be useful for validating a few pages after importing from a new source.
 

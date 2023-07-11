@@ -90,7 +90,7 @@ Splitting the same document into 2 choices.
 {% endtab %}
 
 {% tab title="User interface" %}
-![](</public/assets/Screenshot 2021-05-07 at 11.08.44.png>)
+![](</assets/Screenshot 2021-05-07 at 11.08.44.png>)
 {% endtab %}
 {% endtabs %}
 

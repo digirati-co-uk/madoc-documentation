@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "static": "next static",
     "start": "next start"
   },
   "repository": {

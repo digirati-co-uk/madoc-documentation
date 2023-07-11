@@ -18,7 +18,7 @@ This information is also available on the frontend of the site, but can be usefu
 
 You can also see an overview of your projects progress on the "Overview" tab.
 
-![](</public/assets/image (4).png>)
+![](</assets/image (4).png>)
 
 {% hint style="info" %}
 We try our best to show accurate statistics here, but cannot guarantee this if content is added or removed during the lifetime of the project.
