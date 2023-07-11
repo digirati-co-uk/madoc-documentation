@@ -15,14 +15,15 @@ The main building block in a document is a field. A field can be made up of sing
 
 If you were tasked with creating a web form to be included in a crowdsourcing project you would want it to follow some basic rules:
 
-* 2 text boxes to be shown, one for each name
-* Correct labels on the form
-* Both text boxes should be single lines
+- 2 text boxes to be shown, one for each name
+- Correct labels on the form
+- Both text boxes should be single lines
 
 In a capture model document the data and how to edit the data is stored together in the format. To achieve the above rules your document may look like this:
 
 {% tabs %}
 {% tab title="Document before data entry" %}
+
 ```javascript
 {
   "firstName": [{
@@ -43,9 +44,11 @@ In a capture model document the data and how to edit the data is stored together
   }]
 }
 ```
+
 {% endtab %}
 
 {% tab title="Document after data entry" %}
+
 ```javascript
 {
   "firstName": [{
@@ -66,6 +69,7 @@ In a capture model document the data and how to edit the data is stored together
   }]
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -77,7 +81,7 @@ This is the format in its verbose form and how it's stored and transported. Howe
 
 We have also created a UI that lets you build these capture models up.
 
-![](<../../../../public/assets/Screenshot 2021-05-06 at 18.13.25.png>)
+![](</public/assets/Screenshot 2021-05-06 at 18.13.25.png>)
 
 ### Short hand
 
@@ -85,14 +89,17 @@ The capture model format is a verbose format made to be verifiably correct and p
 
 {% tabs %}
 {% tab title="Short hand" %}
+
 ```javascript
 {
   "name": "text-field"
 }
 ```
+
 {% endtab %}
 
 {% tab title="Full format" %}
+
 ```javascript
 {
   "name": [
@@ -105,18 +112,21 @@ The capture model format is a verbose format made to be verifiably correct and p
   ]
 }
 ```
+
 {% endtab %}
 
 {% tab title="Output JSON" %}
+
 ```
 {
   "name": ""
 }
 ```
+
 {% endtab %}
 
 {% tab title="User preview" %}
-![](<../../../../public/assets/Screenshot 2021-05-06 at 18.04.48.png>)
+![](</public/assets/Screenshot 2021-05-06 at 18.04.48.png>)
 {% endtab %}
 {% endtabs %}
 
@@ -124,6 +134,7 @@ The short hand allows you to describe your field quickly and generate the defaul
 
 {% tabs %}
 {% tab title="Short hand" %}
+
 ```javascript
 {
   "name": {
@@ -133,9 +144,11 @@ The short hand allows you to describe your field quickly and generate the defaul
   }
 }
 ```
+
 {% endtab %}
 
 {% tab title="Full format" %}
+
 ```javascript
 {
   "name": [
@@ -149,18 +162,21 @@ The short hand allows you to describe your field quickly and generate the defaul
   ]
 }
 ```
+
 {% endtab %}
 
 {% tab title="Output JSON" %}
+
 ```javascript
 {
   "name": ""
 }
 ```
+
 {% endtab %}
 
 {% tab title="User preview" %}
-![](<../../../../public/assets/Screenshot 2021-05-06 at 18.09.16.png>)
+![](</public/assets/Screenshot 2021-05-06 at 18.09.16.png>)
 {% endtab %}
 {% endtabs %}
 
@@ -198,15 +214,18 @@ In a document an entity is a collection of fields grouped together. If you wante
 
 {% tabs %}
 {% tab title="Short hand" %}
+
 ```javascript
 {
   "person.firstName": "text-field",
   "person.familyName": "text-field"
 }
 ```
+
 {% endtab %}
 
 {% tab title="Full model" %}
+
 ```javascript
 {
   "person": [
@@ -236,6 +255,7 @@ In a document an entity is a collection of fields grouped together. If you wante
   ]
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 

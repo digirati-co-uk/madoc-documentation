@@ -2,8 +2,6 @@
 
 Madoc support creating custom themes on Disk. You can also include themes in a plugin ([example](https://github.com/stephenwf/madoc-example-plugin/blob/main/src/plugin.ts#L35))
 
-
-
 The folder structure of a theme is as follows:
 
 ```
@@ -16,8 +14,6 @@ my-custom-theme
 │   └── style.css
 └── theme.json
 ```
-
-
 
 #### Theme definition file
 
@@ -49,11 +45,11 @@ If you are using an editor, the JSON schema should help provide completions for 
 
 The header themes the background and text for the main site navigation and search box.
 
-| Preset name |                                                                 |
-| ----------- | --------------------------------------------------------------- |
-| `default`   | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.16.54.png>) |
-| `dark`      | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.12.36.png>) |
-| `midnight`  | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.17.21.png>) |
+| Preset name |                                                             |
+| ----------- | ----------------------------------------------------------- |
+| `default`   | ![](</public/assets/Screenshot 2022-02-28 at 16.16.54.png>) |
+| `dark`      | ![](</public/assets/Screenshot 2022-02-28 at 16.12.36.png>) |
+| `midnight`  | ![](</public/assets/Screenshot 2022-02-28 at 16.17.21.png>) |
 
 Custom options
 
@@ -74,17 +70,17 @@ Custom options
 }
 ```
 
-![](<../../../public/assets/Screenshot 2022-02-28 at 16.27.09.png>)
+![](</public/assets/Screenshot 2022-02-28 at 16.27.09.png>)
 
 ### Site container
 
 The site container theme controls the background of the main content and the background of the page container.
 
-| Preset name |                                                                 |
-| ----------- | --------------------------------------------------------------- |
-| `default`   | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.29.05.png>) |
-| `light`     | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.27.40.png>) |
-| `dark`      | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.30.10.png>) |
+| Preset name |                                                             |
+| ----------- | ----------------------------------------------------------- |
+| `default`   | ![](</public/assets/Screenshot 2022-02-28 at 16.29.05.png>) |
+| `light`     | ![](</public/assets/Screenshot 2022-02-28 at 16.27.40.png>) |
+| `dark`      | ![](</public/assets/Screenshot 2022-02-28 at 16.30.10.png>) |
 
 Custom options
 
@@ -101,41 +97,41 @@ Custom options
 }
 ```
 
-![](<../../../public/assets/Screenshot 2022-02-28 at 16.32.02.png>)
+![](</public/assets/Screenshot 2022-02-28 at 16.32.02.png>)
 
 ### Footer
 
-|         |                                                                 |
-| ------- | --------------------------------------------------------------- |
-| `light` | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.33.10.png>) |
-| `dark`  | ![](<../../../public/assets/Screenshot 2022-02-28 at 16.33.36.png>) |
+|         |                                                             |
+| ------- | ----------------------------------------------------------- |
+| `light` | ![](</public/assets/Screenshot 2022-02-28 at 16.33.10.png>) |
+| `dark`  | ![](</public/assets/Screenshot 2022-02-28 at 16.33.36.png>) |
 
 Custom options
 
 ```json5
 {
-  "theme": {
-    "background": "red",
-    "color": "blue",
-    "containerBackground": "green"
-  }
+  theme: {
+    background: 'red',
+    color: 'blue',
+    containerBackground: 'green',
+  },
 }
 ```
 
-![](<../../../public/assets/Screenshot 2022-02-28 at 16.34.46.png>)
+![](</public/assets/Screenshot 2022-02-28 at 16.34.46.png>)
 
 ### Global
 
 Only one preset `default` but with the following custom options
 
 ```json
- {
-   "theme": {
-     "global": {
-        "maxWidth": "1880px"
-     }
-   }
- }
+{
+  "theme": {
+    "global": {
+      "maxWidth": "1880px"
+    }
+  }
+}
 ```
 
 `1880px` is the default max page width defined in the theme, but this can be changed.

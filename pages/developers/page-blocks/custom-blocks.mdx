@@ -6,7 +6,7 @@ A page block is a React component that can be dropped on most of the pages on Ma
 
 Almost all UI components on the frontend of the site are Page Blocks. Each page is made up of "slots" that fit into a layout on a page, with each slot containing a default set of blocks that can be customised by the end-user.
 
-![Pages, slots and blocks](<../../../public/assets/image (1).png>)
+![Pages, slots and blocks](</public/assets/image (1).png>)
 
 For example, the Project overview page (`/s/[site]/projects/[project]`) is a React component containing the following code:
 
@@ -101,11 +101,11 @@ Under the component is this "decorator" `blockEditorFor` . This is what will tur
 
 When you are logged into Madoc as an Admin on a site, you can click on "Edit mode" to see the page slots and blocks.
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 12.52.45.png>)
+![](</public/assets/Screenshot 2022-08-04 at 12.52.45.png>)
 
 In this mode you can start editing and adding page blocks, you will see an overview similar to the following
 
-![](../../../public/assets/image.png)
+![](/public/assets/image.png)
 
 1. At the top of every page is the global header page block. You can see that when a page block has been customised you get 3 actions,  "edit blocks", "add block" and "reset slot"
 2. When a slot has not been customised it will appear grey, with a customise button. When you click on it you will see 2 options (Customise only on this page, customise for all types in this context). The first is the most common, the second is not yet properly documented. But you could use this second option to customise ALL canvas pages inside of a project for example.
@@ -113,15 +113,15 @@ In this mode you can start editing and adding page blocks, you will see an overv
 
 When you click on **Add block** a popup will appear with all the available blocks that match the context you are on. You will also see the blocks at the top that are defaults to the page.
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 13.01.26.png>)
+![](</public/assets/Screenshot 2022-08-04 at 13.01.26.png>)
 
 If you add a page block to Madoc, this is where it will appear. When you choose a block with an `editor` property, it will show you the form when you add, alongside a preview of what the block will look like
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 13.02.31.png>)
+![](</public/assets/Screenshot 2022-08-04 at 13.02.31.png>)
 
 Once saved, the page block will be added into the slot along side the rest, with the "Edit" button.
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 13.03.48.png>)
+![](</public/assets/Screenshot 2022-08-04 at 13.03.48.png>)
 
 ### Creating a custom block
 
@@ -194,16 +194,16 @@ export const defaultPageBlockDefinitions: PageBlockDefinition<any, any, any, any
 
 This will ensure that the block is registered and bundled correctly. Now we should be able to go to any page on Madoc and add our block to the page.
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 13.22.55.png>)
+![](</public/assets/Screenshot 2022-08-04 at 13.22.55.png>)
 
 And when we add / edit it, we will see our form
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 13.23.30.png>)
+![](</public/assets/Screenshot 2022-08-04 at 13.23.30.png>)
 
 And on the page when we hit save, along-side an the edit button to take you back to the form.
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 13.25.08.png>)
+![](</public/assets/Screenshot 2022-08-04 at 13.25.08.png>)
 
-![](<../../../public/assets/Screenshot 2022-08-04 at 13.24.30.png>)
+![](</public/assets/Screenshot 2022-08-04 at 13.24.30.png>)
 
 And finally on our page!

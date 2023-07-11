@@ -2,12 +2,12 @@
 
 The structure of the capture model aims to make it easier to contribute values to the document values by splitting down the fields into chunks. For example, you may be transcribing a document while also identifying people, place names and allowing people to write comments or notes. Instead of presenting the user with one giant form with all of these values, you can use a structure to split these up into a set of choices:
 
-* **What would you like to Annotate?**
-  * Transcribe the text
-  * **Identify entity**
-    * Person
-    * Place
-  * Write a note
+- **What would you like to Annotate?**
+  - Transcribe the text
+  - **Identify entity**
+    - Person
+    - Place
+  - Write a note
 
 The user could click through these options and only see the fields they need to see. Some of these may overlap, for example you may have the notes under the transcription. This is all supported when setting up the structure.
 
@@ -27,6 +27,7 @@ Default single choice.
 
 {% tabs %}
 {% tab title="Structure" %}
+
 ```javascript
 {
   "id": "9c2c6558-703d-4276-ac44-01c78e66ecef",
@@ -38,15 +39,18 @@ Default single choice.
   ]
 }
 ```
+
 {% endtab %}
 
 {% tab title="Model short hand" %}
+
 ```javascript
 {
   "firstName": "text-field",
   "familyName": "text-field"
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -54,6 +58,7 @@ Splitting the same document into 2 choices.
 
 {% tabs %}
 {% tab title="Structure" %}
+
 ```javascript
 {
   "id": "db314a02-b857-430a-98dd-0f49d12dd978",
@@ -81,10 +86,11 @@ Splitting the same document into 2 choices.
   ]
 }
 ```
+
 {% endtab %}
 
 {% tab title="User interface" %}
-![](<../../../../public/assets/Screenshot 2021-05-07 at 11.08.44.png>)
+![](</public/assets/Screenshot 2021-05-07 at 11.08.44.png>)
 {% endtab %}
 {% endtabs %}
 

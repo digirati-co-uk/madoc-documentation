@@ -20,9 +20,9 @@ It depends on a few factors.
 
 There are a few cases where canvases or manifests may be randomly assigned or navigated to. However the process for choosing is not fully random. A resource will be chosen when it matches the following:
 
-* Has this resource been completed? **No**
-* Has this resource reached the maximum number of contributors? **No**
-* Am I assigned to the resource? **No**
+- Has this resource been completed? **No**
+- Has this resource reached the maximum number of contributors? **No**
+- Am I assigned to the resource? **No**
 
 There are 2 more edge cases where the random process is less random.
 
@@ -64,11 +64,11 @@ This feature is not compatible with many configuration values and **should be av
 
 If you prevent users from navigating to canvases then users will be able to browse manifests in your project but not be able to browse the images inside. With only this configuration chosen users will not be able to contribute to your project. You will have to assign resources manually. Administrators and reviewers will still be able to browse the images.
 
-![This is displayed to users in place of the manifest images](<../../../public/assets/Screenshot 2021-05-07 at 17.39.17.png>)
+![This is displayed to users in place of the manifest images](</public/assets/Screenshot 2021-05-07 at 17.39.17.png>)
 
 If you also choose "Randomly assign canvas to user" then in addition to not being able to browse a manifests images, they will be able to be randomly assigned an image.
 
-![This is displayed in place of the manifest images](<../../../public/assets/Screenshot 2021-05-07 at 17.41.10.png>)
+![This is displayed in place of the manifest images](</public/assets/Screenshot 2021-05-07 at 17.41.10.png>)
 
 If you prevent users from navigating to manifests then they will only be able to work on resources that have been assigned to them.
 
@@ -139,19 +139,23 @@ The model root is an option in a capture model structure that drives at what lev
 
 {% tabs %}
 {% tab title="Model root = line" %}
+
 ```
 page -> line -> word
-             \ 
+             \
               -> new word
 ```
+
 {% endtab %}
 
 {% tab title="Model root = page" %}
+
 ```
 page -> line -> word
-    \ 
+    \
      -> line 2 -> new word
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -161,10 +165,10 @@ Since this problem is a complex UI and UX issue for displaying editing UIs it is
 
 ### **Prepare step**
 
-![This is what happens when a resource is prepared for contribution](<../../../public/assets/image (6).png>)
+![This is what happens when a resource is prepared for contribution](</public/assets/image (6).png>)
 
 ### **Claim and update claim step**
 
-![This is what happens when a user creates or updates a submission](<../../../public/assets/image (5).png>)
+![This is what happens when a user creates or updates a submission](</public/assets/image (5).png>)
 
 These diagrams show the process for when a user _can_ contribute. During the create and update step we further verify that the resource can be contributed to.
