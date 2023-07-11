@@ -1,5 +1,6 @@
 import { ConfigOverview } from '../../../components/ConfigOverview/ConfigOverview';
 import { siteConfiguration } from '@madoc.io/config';
+import { ModelEditor } from '../../../components/ModelEditor/ModelEditor';
 
 
 # Interface options
@@ -7,3 +8,15 @@ This is a list of all the options available in the interface configuration.
 
 
 <ConfigOverview config={siteConfiguration.interface} />
+
+## Example Interface
+
+<ModelEditor
+  template={siteConfiguration.interface}
+  data={{
+    projectPageOptions: {},
+    manifestPageOptions: {},
+    atlasBackground: '',
+    canvasPageOptions: {},
+  }}
+/>

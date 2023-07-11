@@ -1,0 +1,127 @@
+{
+  "id": "771cee98-ebae-46c4-bdb0-5d558f4cbb7f",
+  "structure": {
+    "id": "70383db4-eedd-445f-be4b-a4fe424d57ec",
+    "type": "choice",
+    "label": "Color",
+    "items": [
+      {
+        "id": "921b2486-fb08-4c6d-b521-703a4ce9264e",
+        "type": "model",
+        "label": "Default",
+        "fields": [
+          "text",
+          "color",
+          "border"
+        ]
+      }
+    ]
+  },
+  "document": {
+    "id": "ce787e20-27ab-43a1-9299-1858f2d22f6b",
+    "type": "entity",
+    "label": "Color",
+    "properties": {
+      "text": [
+        {
+          "id": "844a01c7-dfd2-4691-aed9-dfff7cc4117d",
+          "type": "text-field",
+          "label": "text",
+          "value": ""
+        },
+        {
+          "id": "79c55204-1b78-4f40-bd83-f78e3571b4c3",
+          "type": "text-field",
+          "label": "text",
+          "value": "This is some text.",
+          "revises": "844a01c7-dfd2-4691-aed9-dfff7cc4117d",
+          "revision": "c0fb97d5-b8d1-44a3-96c0-6e95ce68ebe8"
+        }
+      ],
+      "color": [
+        {
+          "id": "7129b065-d867-4c03-9315-e5b646d1d200",
+          "type": "color-field",
+          "label": "color",
+          "value": "",
+          "clearable": true
+        },
+        {
+          "id": "3883d2ab-61a9-4692-9980-0705a43bd719",
+          "type": "color-field",
+          "label": "color",
+          "value": "#d25656",
+          "revises": "7129b065-d867-4c03-9315-e5b646d1d200",
+          "revision": "c0fb97d5-b8d1-44a3-96c0-6e95ce68ebe8",
+          "clearable": true
+        }
+      ],
+      "border": [
+        {
+          "id": "f2cf4120-be53-4829-885c-fe219031959f",
+          "type": "border-field",
+          "label": "border",
+          "value": {
+            "size": 0,
+            "color": "#000000",
+            "style": "solid",
+            "opacity": 1
+          },
+          "clearable": true
+        },
+        {
+          "id": "c0845242-c75f-4b2b-9160-47f18ce6e261",
+          "type": "border-field",
+          "label": "border",
+          "value": {
+            "size": 3,
+            "color": "#000000",
+            "style": "solid",
+            "opacity": 1
+          },
+          "revises": "f2cf4120-be53-4829-885c-fe219031959f",
+          "revision": "c0fb97d5-b8d1-44a3-96c0-6e95ce68ebe8",
+          "clearable": true
+        }
+      ]
+    }
+  },
+  "revisions": [
+    {
+      "structureId": "921b2486-fb08-4c6d-b521-703a4ce9264e",
+      "fields": [
+        "text",
+        "color",
+        "border"
+      ],
+      "authors": [
+        "urn:madoc:user:1"
+      ],
+      "id": "c0fb97d5-b8d1-44a3-96c0-6e95ce68ebe8",
+      "revises": "921b2486-fb08-4c6d-b521-703a4ce9264e",
+      "approved": true,
+      "status": "accepted",
+      "label": "Default",
+      "captureModelId": "771cee98-ebae-46c4-bdb0-5d558f4cbb7f"
+    }
+  ],
+  "derivedFrom": "84c4d7b8-8184-410a-b5e8-f40512b4f9b6",
+  "target": [
+    {
+      "id": "urn:madoc:manifest:9665",
+      "type": "Manifest"
+    },
+    {
+      "id": "urn:madoc:canvas:9666",
+      "type": "Canvas"
+    }
+  ],
+  "contributors": {
+    "urn:madoc:user:1": {
+      "id": "urn:madoc:user:1",
+      "type": "Person",
+      "name": "Stephen"
+    }
+  },
+  "projectId": 33
+}

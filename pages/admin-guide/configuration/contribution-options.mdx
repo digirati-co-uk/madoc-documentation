@@ -1,5 +1,6 @@
 import { ConfigOverview } from '../../../components/ConfigOverview/ConfigOverview';
 import { siteConfiguration } from '@madoc.io/config';
+import { ModelEditor } from '../../../components/ModelEditor/ModelEditor';
 
 
 # Contribution options
@@ -7,3 +8,28 @@ These options change how users make contributions to projects, what they see and
 
 
 <ConfigOverview config={siteConfiguration.contributions} />
+
+## Example Interface
+
+<ModelEditor
+  template={siteConfiguration.contributions}
+  data={{
+    contributionMode: '',
+    maxContributionsPerResource: '',
+    preventMultipleUserSubmissionsPerResource: '',
+    forkMode: false,
+    claimGranularity: '',
+    assigningCanvas: '',
+    randomCanvas: false,
+    defaultEditorOrientation: '',
+    modelPageOptions: {},
+    contributionWarningTime: '',
+    shortExpiryTime: '',
+    longExpiryTime: '',
+    submissionOptions: {},
+    modelPageShowAnnotations: false,
+    modelPageShowDocument: false,
+    canvasPageShowAnnotations: false,
+    canvasPageShowDocument: false,
+  }}
+/>

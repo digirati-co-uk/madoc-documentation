@@ -1,0 +1,24 @@
+import { CaptureModelPlayground } from '../../../components/CaptureModelPlayground/CaptureModelPlayground.lazy';
+
+# Capture model playground
+Here you can try creating a capture model from scratch using a shorthand syntax.
+
+Each new line is a single field, you can add modifiers to the field by using the following syntax:
+```
+{@modified-name/modifier-value}
+```
+
+The available modifiers are:
+
+- `{@many}` - Allows multiple instances of the field
+- `{@default/some value}` - Sets the default value of the field
+- `{@type/some-field-type}` - Sets the type of the field
+- `{@lang/en}` - Sets the language of the field
+- `{@langs/en,fr,es}` - Sets the languages of the field (comma separated)
+- `{@defaultLang/en}` - Sets the default language of the field
+- `{@description/some description}` - Sets the description of the field
+- `{@pluralLabel/things}` - Sets the plural label of the field when multiple instances are allowed
+
+Press the "Preview" button to see the resulting capture model.
+
+<CaptureModelPlayground />

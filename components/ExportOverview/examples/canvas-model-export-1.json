@@ -1,0 +1,13 @@
+{
+  "text": "This is some text.",
+  "color": "#d25656",
+  "border": {
+    "size": 3,
+    "color": "#000000",
+    "style": "solid",
+    "opacity": 1
+  },
+  "projectId": 33,
+  "id": "771cee98-ebae-46c4-bdb0-5d558f4cbb7f",
+  "derivedFrom": "84c4d7b8-8184-410a-b5e8-f40512b4f9b6"
+}

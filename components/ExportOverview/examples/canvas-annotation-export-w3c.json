@@ -1,0 +1,19 @@
+{
+  "id": "https://madoc.local/s/stephen/madoc/api/canvases/9666/models?format=w3c-annotation",
+  "label": null,
+  "type": "AnnotationPage",
+  "items": [
+    {
+      "id": "https://madoc.local/s/stephen/madoc/api/canvases/9666/models/6197388b-9521-41b4-baff-4d80d94bca85",
+      "type": "Annotation",
+      "motivation": "painting",
+      "body": {
+        "type": "TextualBody",
+        "value": "Example body text"
+      },
+      "madoc:id": 9666,
+      "madoc:selectorId": "b1ea0bd8-ec48-4953-a219-002378291df0",
+      "target": "https://iiif.wellcomecollection.org/presentation/b18035723/canvases/b18035723_0001.JP2#xywh=183,245,2142,700"
+    }
+  ]
+}

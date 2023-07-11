@@ -1,0 +1,12 @@
+{
+  "name": "styled-components",
+  "version": "5.3.11",
+  "module": "true",
+  "main": "index.mjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    }
+  }
+}
