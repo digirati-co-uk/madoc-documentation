@@ -7,9 +7,9 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
-"@atlas-viewer/atlas@^2.0.0-alpha.19", "@atlas-viewer/atlas@https://pkg.csb.dev/atlas-viewer/atlas/commit/9fc143d3/@atlas-viewer/atlas":
+"@atlas-viewer/atlas@https://pkg.csb.dev/atlas-viewer/atlas/commit/6a41e259/@atlas-viewer/atlas":
   version "2.0.0-alpha.21"
-  resolved "https://pkg.csb.dev/atlas-viewer/atlas/commit/9fc143d3/@atlas-viewer/atlas#9a7b026102bf7baedbe5f651f83500d3917bee81"
+  resolved "https://pkg.csb.dev/atlas-viewer/atlas/commit/6a41e259/@atlas-viewer/atlas#df450b40afcd1180b8ea965a5c1e515e4d7c4959"
   dependencies:
     "@atlas-viewer/dna" "^0.5.0"
     "@atlas-viewer/iiif-image-api" "^2.0.5"
@@ -38,12 +38,28 @@
     react-use-measure "^2.0.1"
     scheduler "^0.21.0"
 
+"@atlas-viewer/atlas@https://pkg.csb.dev/atlas-viewer/atlas/commit/9fc143d3/@atlas-viewer/atlas":
+  version "2.0.0-alpha.21"
+  resolved "https://pkg.csb.dev/atlas-viewer/atlas/commit/9fc143d3/@atlas-viewer/atlas#9a7b026102bf7baedbe5f651f83500d3917bee81"
+  dependencies:
+    "@atlas-viewer/dna" "^0.5.0"
+    "@atlas-viewer/iiif-image-api" "^2.0.5"
+    "@iiif/presentation-3" ">=1"
+    "@iiif/vault" "^0.9.18"
+    "@iiif/vault-helpers" "^0.9.7"
+    lru-cache "^7.17.0"
+    nanoid "^3.1.9"
+    normalize-wheel "^1.0.1"
+    react-reconciler "^0.26.2"
+    react-use-measure "^2.0.1"
+    scheduler "^0.21.0"
+
 "@atlas-viewer/dna@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@atlas-viewer/dna/-/dna-0.5.0.tgz#aab824540b59dc3897e2ba4cdb51a53e47ed3311"
   integrity sha512-vHyMwXoCFq6ymk+wOVIkMphUo+I+wBRoA2tBf1AIUZWJMsk51cBtO2qzOaZQUh/TmrzrqEY5aEAtgBj52LVRUg==
 
-"@atlas-viewer/iiif-image-api@2.*", "@atlas-viewer/iiif-image-api@^2.0.5", "@atlas-viewer/iiif-image-api@^2.1.1":
+"@atlas-viewer/iiif-image-api@^2.0.5", "@atlas-viewer/iiif-image-api@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-2.1.1.tgz#da01b09e7d29c21f6524b6f632368f48e8eb9d5a"
   integrity sha512-g7gleRz0Guxwj/JqtppiqloabUTCew61GBzon+ZZ7mXpnMQ+zMupLaI1jHfGxM1Xy9a1+zMwPuUTXqTFkEyueA==
@@ -220,9 +236,9 @@
   dependencies:
     client-only "^0.0.1"
 
-"@iiif/parser@>=v1.0.13", "@iiif/parser@^1.0.13", "@iiif/parser@https://pkg.csb.dev/IIIF-Commons/parser/commit/9c888e0c/@iiif/parser":
+"@iiif/parser@^1.0.13", "@iiif/parser@https://pkg.csb.dev/IIIF-Commons/parser/commit/79a20658/@iiif/parser":
   version "1.1.2"
-  resolved "https://pkg.csb.dev/IIIF-Commons/parser/commit/9c888e0c/@iiif/parser#1560697c630a1df49414b5661843dcdb546c9a75"
+  resolved "https://pkg.csb.dev/IIIF-Commons/parser/commit/79a20658/@iiif/parser#788efec51658339aa754dc6ab281abd4e9f8e6f8"
   dependencies:
     "@iiif/presentation-2" "^1.0.4"
     "@iiif/presentation-3" "^2.0.5"
@@ -238,9 +254,9 @@
     "@iiif/presentation-3-normalized" "^0.9.7"
     "@types/geojson" "^7946.0.10"
 
-"@iiif/parser@https://pkg.csb.dev/IIIF-Commons/parser/commit/79a20658/@iiif/parser":
+"@iiif/parser@https://pkg.csb.dev/IIIF-Commons/parser/commit/9c888e0c/@iiif/parser":
   version "1.1.2"
-  resolved "https://pkg.csb.dev/IIIF-Commons/parser/commit/79a20658/@iiif/parser#788efec51658339aa754dc6ab281abd4e9f8e6f8"
+  resolved "https://pkg.csb.dev/IIIF-Commons/parser/commit/9c888e0c/@iiif/parser#1560697c630a1df49414b5661843dcdb546c9a75"
   dependencies:
     "@iiif/presentation-2" "^1.0.4"
     "@iiif/presentation-3" "^2.0.5"
@@ -259,7 +275,7 @@
   dependencies:
     "@iiif/presentation-3" "^2.0.5"
 
-"@iiif/presentation-3@*", "@iiif/presentation-3@1.x", "@iiif/presentation-3@>=1", "@iiif/presentation-3@^1.1.2", "@iiif/presentation-3@^1.1.3":
+"@iiif/presentation-3@*", "@iiif/presentation-3@1.x", "@iiif/presentation-3@>=1", "@iiif/presentation-3@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@iiif/presentation-3/-/presentation-3-1.1.3.tgz#7f5ea909ae22aa9ce2e9d91cec79f5f1cd0fd6fb"
   integrity sha512-Ek+25nkQouo0pXAqCsWYbAeS4jLDEBQA7iul2jzgnvoJrucxDQN2lXyNLgOUDRqpTdSqJ69iz5lm6DLaxil+Nw==
@@ -273,19 +289,6 @@
   dependencies:
     "@types/geojson" "^7946.0.10"
 
-"@iiif/vault-helpers@>=0.9.7", "@iiif/vault-helpers@https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/518bf0e0/@iiif/vault-helpers":
-  version "0.10.0"
-  resolved "https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/518bf0e0/@iiif/vault-helpers#ae025dc74eaede0eddcb4363e10bd67f8d387a0a"
-  dependencies:
-    "@iiif/presentation-2" "1.0.4"
-    "@iiif/presentation-3" "2.0.5"
-    "@iiif/presentation-3-normalized" "^0.9.7"
-  optionalDependencies:
-    abs-svg-path "^0.1.0"
-    parse-svg-path "^0.1.0"
-    react-i18next "^11.18.0"
-    svg-arc-to-cubic-bezier "^3.2.0"
-
 "@iiif/vault-helpers@^0.9.7", "@iiif/vault-helpers@^0.9.8", "@iiif/vault-helpers@https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/e9d41f61/@iiif/vault-helpers":
   version "0.9.11"
   resolved "https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/e9d41f61/@iiif/vault-helpers#cfeb9ce240554590d9f82f1885dcd2594b2175b6"
@@ -298,11 +301,24 @@
     react-i18next "^11.18.0"
     svg-arc-to-cubic-bezier "^3.2.0"
 
-"@iiif/vault@>=0.9.19", "@iiif/vault@^0.9.18", "@iiif/vault@^0.9.19", "@iiif/vault@https://pkg.csb.dev/IIIF-Commons/vault/commit/4fdd7a3b/@iiif/vault":
-  version "0.9.22"
-  resolved "https://pkg.csb.dev/IIIF-Commons/vault/commit/4fdd7a3b/@iiif/vault#a98542950c921b9d014e59c0b1af193c55c3bc6a"
+"@iiif/vault-helpers@https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/518bf0e0/@iiif/vault-helpers":
+  version "0.10.0"
+  resolved "https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/518bf0e0/@iiif/vault-helpers#ae025dc74eaede0eddcb4363e10bd67f8d387a0a"
   dependencies:
-    "@iiif/parser" "https://pkg.csb.dev/IIIF-Commons/parser/commit/30a567d8/@iiif/parser"
+    "@iiif/presentation-2" "1.0.4"
+    "@iiif/presentation-3" "2.0.5"
+    "@iiif/presentation-3-normalized" "^0.9.7"
+  optionalDependencies:
+    abs-svg-path "^0.1.0"
+    parse-svg-path "^0.1.0"
+    react-i18next "^11.18.0"
+    svg-arc-to-cubic-bezier "^3.2.0"
+
+"@iiif/vault@^0.9.18", "@iiif/vault@^0.9.19", "@iiif/vault@https://pkg.csb.dev/IIIF-Commons/vault/commit/4a79bea0/@iiif/vault":
+  version "0.9.22"
+  resolved "https://pkg.csb.dev/IIIF-Commons/vault/commit/4a79bea0/@iiif/vault#c39d4ae7b929a63cabdcb548abfcae9ac30e5f98"
+  dependencies:
+    "@iiif/parser" "https://pkg.csb.dev/IIIF-Commons/parser/commit/79a20658/@iiif/parser"
     "@iiif/presentation-2" "1.*"
     "@iiif/presentation-3" "^1.1.3"
     typesafe-actions "^5.1.0"
@@ -312,11 +328,11 @@
     tiny-invariant "^1.3.1"
     zustand "^4.3.6"
 
-"@iiif/vault@https://pkg.csb.dev/IIIF-Commons/vault/commit/4a79bea0/@iiif/vault":
+"@iiif/vault@https://pkg.csb.dev/IIIF-Commons/vault/commit/4fdd7a3b/@iiif/vault":
   version "0.9.22"
-  resolved "https://pkg.csb.dev/IIIF-Commons/vault/commit/4a79bea0/@iiif/vault#c39d4ae7b929a63cabdcb548abfcae9ac30e5f98"
+  resolved "https://pkg.csb.dev/IIIF-Commons/vault/commit/4fdd7a3b/@iiif/vault#a98542950c921b9d014e59c0b1af193c55c3bc6a"
   dependencies:
-    "@iiif/parser" "https://pkg.csb.dev/IIIF-Commons/parser/commit/79a20658/@iiif/parser"
+    "@iiif/parser" "https://pkg.csb.dev/IIIF-Commons/parser/commit/30a567d8/@iiif/parser"
     "@iiif/presentation-2" "1.*"
     "@iiif/presentation-3" "^1.1.3"
     typesafe-actions "^5.1.0"
@@ -3766,11 +3782,11 @@ react-i18next@^11.18.0:
     "@babel/runtime" "^7.14.5"
     html-parse-stringify "^3.0.1"
 
-"react-iiif-vault@https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/7c770a3e/react-iiif-vault":
+"react-iiif-vault@https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/4c9f81c5/react-iiif-vault", "react-iiif-vault@https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/7c770a3e/react-iiif-vault", "react-iiif-vault@https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/85a8ada5/react-iiif-vault":
   version "0.9.20"
-  resolved "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/7c770a3e/react-iiif-vault#055a3b033b1503366cd35b7b243a86bcad6269fd"
+  resolved "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/4c9f81c5/react-iiif-vault#1e87e380aca60ad2b0066bb4f0dd5dd92aecfe4b"
   dependencies:
-    "@atlas-viewer/atlas" "https://pkg.csb.dev/atlas-viewer/atlas/commit/9fc143d3/@atlas-viewer/atlas"
+    "@atlas-viewer/atlas" "https://pkg.csb.dev/atlas-viewer/atlas/commit/6a41e259/@atlas-viewer/atlas"
     "@atlas-viewer/iiif-image-api" "^2.1.1"
     "@iiif/parser" "https://pkg.csb.dev/IIIF-Commons/parser/commit/79a20658/@iiif/parser"
     "@iiif/presentation-2" "1.*"
@@ -3784,24 +3800,6 @@ react-i18next@^11.18.0:
     typescript "^4.7.4"
     use-sync-external-store "^1.2.0"
     zustand "^4.3.6"
-
-"react-iiif-vault@https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/85a8ada5/react-iiif-vault":
-  version "0.9.20"
-  resolved "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/85a8ada5/react-iiif-vault#1d0b5c703d40e90d4f2b33d89fae587bee5af81f"
-  dependencies:
-    "@atlas-viewer/atlas" "^2.0.0-alpha.19"
-    "@atlas-viewer/iiif-image-api" "2.*"
-    "@iiif/parser" ">=v1.0.13"
-    "@iiif/presentation-2" "1.*"
-    "@iiif/presentation-3" "^1.1.2"
-    "@iiif/vault" ">=0.9.19"
-    "@iiif/vault-helpers" ">=0.9.7"
-    react "^16.10.2 || ^17.0.2 || ^18.2.0"
-    react-dom "^16.10.2 || ^17.0.2 || ^18.2.0"
-    react-error-boundary "^3.1.4"
-    redux "^4.2.0"
-    typescript "^4.7.4"
-    use-sync-external-store "^1.2.0"
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -3911,7 +3909,7 @@ redux-thunk@^2.3.0:
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.2.tgz#b9d05d11994b99f7a91ea223e8b04cf0afa5ef3b"
   integrity sha512-+P3TjtnP0k/FEjcBL5FZpoovtvrTNT/UXd4/sluaSyrURlSlhLSzEdfsTBW7WsKB6yPvgd7q/iZPICFjW4o57Q==
 
-redux@^4.0.5, redux@^4.2.0:
+redux@^4.0.5:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.2.1.tgz#c08f4306826c49b5e9dc901dee0452ea8fce6197"
   integrity sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==

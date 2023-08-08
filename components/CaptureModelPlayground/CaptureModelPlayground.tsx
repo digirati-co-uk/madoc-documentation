@@ -24,11 +24,18 @@ const Template = (_props: any) => {
   );
 };
 
-export default function ShorthandEditor() {
-  const [value, setValue] = useState(`Label {@type/international-field} {@langs/en,de}
+export default function ShorthandEditor({ initial, defaultType }: { initial?: string; defaultType?: string }) {
+  const [value, setValue] = useState(
+    initial ||
+      `Label {@type/international-field} {@langs/en,de}
 Description
-Tag {@many} {@type/text-field} {@pluralLabel/Tags}`);
-  const [doc, setDoc] = useState(() => captureModelShorthandText(value));
+Tag {@many} {@type/text-field} {@pluralLabel/Tags}`
+  );
+  const [doc, setDoc] = useState(() =>
+    captureModelShorthandText(value, {
+      defaultType,
+    })
+  );
 
   return (
     <>
@@ -42,7 +49,7 @@ Tag {@many} {@type/text-field} {@pluralLabel/Tags}`);
           />
           <button
             className="bg-blue-500 text-white rounded p-2 mt-2 hover:bg-blue-600 active:bg-blue-700 drop-shadow-sm"
-            onClick={() => setDoc(captureModelShorthandText(value))}
+            onClick={() => setDoc(captureModelShorthandText(value, { defaultType }))}
           >
             Preview
           </button>

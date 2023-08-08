@@ -1,5 +1,6 @@
 import { IIIFExplorer } from '@manifest-editor/iiif-browser';
 import '@manifest-editor/iiif-browser/dist/style.css';
+import { CanvasPanel } from 'react-iiif-vault';
 
 # IIIF in Madoc
 
@@ -21,6 +22,16 @@ From the [IIIF Specification](https://iiif.io/api/presentation/3.0/#53-canvas):
 ### Manifest
 
 A manifest will be made up of one or more canvases. For example, a book make contain a single canvas for each of the pages of a book, including the front and back covers. The manifest contains the structural information to bind the book together. Ranges of canvases could be constructed to represent chapters or a table of contents.
+
+<style>{`.atlas { --atlas-background: #EEE; margin: 20px 0; }`}</style>
+<style>{`.dark .atlas { --atlas-background: #000; margin: 20px 0; }`}</style>
+<CanvasPanel
+  manifest="https://digirati-co-uk.github.io/wunder.json"
+  height={550}
+  startCanvas="https://digirati-co-uk.github.io/wunder/canvases/3"
+  spacing={40}
+/>
+
 
 From the [IIIF Specification](https://iiif.io/api/presentation/3.0/#52-manifest):
 

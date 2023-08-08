@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/digirati-co-uk/madoc-documentation#readme",
   "resolutions": {
-    "styled-components": "file:shim-modules/styled-components"
+    "styled-components": "file:shim-modules/styled-components",
+    "react-iiif-vault": "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/4c9f81c5/react-iiif-vault"
   },
   "dependencies": {
     "@iiif/parser": "https://pkg.csb.dev/IIIF-Commons/parser/commit/9c888e0c/@iiif/parser",
@@ -40,7 +41,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-functional-select": "3.3.3",
-    "react-iiif-vault": "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/7c770a3e/react-iiif-vault",
+    "react-iiif-vault": "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/4c9f81c5/react-iiif-vault",
     "react-window": "^1.8.9",
     "sharp": "^0.32.1",
     "styled-components": "file:shim-modules/styled-components",
