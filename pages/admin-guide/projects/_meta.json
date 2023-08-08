@@ -11,6 +11,7 @@
   "-----": { "type": "separator", "title": "Running a project" },
   "project-members": "Project members",
   "project-feedback": "Project feedback",
+  "project-updates": "Project updates",
   "---": { "type": "separator", "title": "Capture models" },
   "capture-models": "Overview",
   "model-document": "Documents and data",
