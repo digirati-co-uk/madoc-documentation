@@ -1,0 +1,30 @@
+import Image from 'next/image'
+
+
+# Site terms and conditions
+
+A new addition in Madoc v2.2 is site terms and conditions. This is a customisable page on Madoc that has an "Agree"
+button at the bottom. This allows you to inform users and have them agree before signing up. This can be found
+at `/s/{site}/terms`
+
+![](</assets/terms-preview.png>)
+
+Once you have set up your first terms and conditions, new users will be linked to the terms and told that they agree
+when registering to your site. Additionally, you can add a line of text above and/or below the registration and login
+pages.
+<center><Image src="/assets/terms-register.png" alt="" width={490} height={414} /></center>
+
+From this page you can click the button "edit terms" to go to the terms page in the admin.
+
+![](</assets/terms-admin.png>)
+
+Existing users will be shown a small notification in the bottom right of the screen when the terms and conditions are
+first created and also when they are updated - so they can read and agree.
+
+![](</assets/terms-popup.png>)
+
+In the database, a list of the terms that each user has accepted is stored. This could be used in the future to lock
+features, pages or the ability to contribute until a user accepts the latest terms.
+
+If you have any suggestions or ideas on how this feature could evolve,
+please  [open a discussion](https://github.com/digirati-co-uk/madoc-platform/discussions) on the Madoc GitHub.
