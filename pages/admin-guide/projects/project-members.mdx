@@ -1,0 +1,47 @@
+import { Callout } from 'nextra/components';
+
+# Project members
+
+<Callout emoji="🚀" type="info">New in in <strong>Madoc v2.2</strong></Callout>
+
+
+Starting from Madoc v2.2, users who submit a contribution to a project which is then accepted, or perform a review in a
+project will be automatically added as a "project member". At the moment this relation is not used in many places,
+but we hope it can form the basis of new features in the near future.
+
+Currently, when a user is a project member, they will be listed on the project page under the "contributors" tab:
+![](</assets/contributors-panel.png>)
+
+<Callout type="default">
+  This is a page block, so you can reorder and move it around on the project page if you want to make this more
+  prominent or remove it from a project.
+</Callout>
+
+Additionally, only project members will be able to leave feedback on a project from the feedback tab.
+
+### Future
+
+In the future you will be able to:
+
+- Manually manage project members (add and remove)
+- Make a project only visible to project members
+- Show projects that you are a member of on your User Homepage and user profile
+
+If you have any suggestions or ideas on how this feature could evolve,
+please  [open a discussion](https://github.com/digirati-co-uk/madoc-platform/discussions) on the Madoc Github.
+
+
+### Migrating from Madoc 2.x
+
+If you are upgrading to Madoc v2.2 from a previous version, you can add all users who have previously submitted to a
+project with a migration button. You will need to do this for each site individually.  From the menu go to
+"Global -> System status".
+
+![](</assets/global-config-system-status.png>)
+
+Here you will see a new button "Migrate project members". Click this and wait a moment. Once complete you should see
+a success message confirming the migration:
+
+![](</assets/migrate-project-members.png>)
+
+Now users who previously contributed will be project members.
