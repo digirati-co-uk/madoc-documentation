@@ -1,0 +1,69 @@
+import { Callout } from 'nextra-theme-docs';
+import {StatusBadgeAssigned, StatusBadgeRejected, StatusBadgeSubmitted, StatusBadgeProgress, StatusBadgeChanges, StatusBadgeApproved} from '../../../components/statusBadge';
+
+# Reviewer Dashboard
+
+<Callout emoji="🚀" type="info">New in in <strong>Madoc v2.2</strong></Callout>
+
+In Madoc v2.2 the reviewer dashboard will be the default view for reviews, giving an improved look and feel to the review process.
+
+![](</assets/Screenshot 2023-08-09 at 11.00.09.png>)
+
+
+When first landing on the review dashboard we can see a list of user contributions to the left. Once a submission is selected, it will show on the right.
+The two panels can be changed in size by dragging the center handle.
+![](</assets/Screenshot 2023-08-09 at 13.23.06.png>)
+
+
+## Review List
+The review list (left) shows all the contributions for this project. By default, it's sorted by last modified and the sorting can be changed to any one of the column headings by ascending or descending.
+
+**Manifest** - sort the list alphabetically by manifest name \
+**Canvas** - sort the list alphabetically by canvas name within its manifest\
+**Modified** - sort the list from when each task was last modified \
+**Status** - sort the list by status with the order being approved, submitted, in progress, assigned and rejected \
+**Assignee** - sort the list alphabetically by the task assignee name
+
+The list will also include in progress and assigned contributions, not all items in the list can be viewed on the submission (right) panel.
+![](</assets/Screenshot 2023-08-09 at 12.11.02.png>)
+***
+
+<StatusBadgeAssigned /> This task that has been assigned to a user but has not been started, there is nothing to view yet
+
+<StatusBadgeProgress /> This task has been started, the user may have a draft, it cant be viewed by the reviewer
+
+<StatusBadgeSubmitted /> This task is ready for review and has been submitted by a user
+
+<StatusBadgeApproved /> This is a submission that has been approved and can still be viewed
+
+<StatusBadgeRejected /> This is a submission that has been rejected and can still be viewed
+
+<StatusBadgeChanges /> This is a submission that has changes requested and and can still be viewed
+
+
+## Submission Panel
+The selected submission can be viewed and actioned on the submission panel (right) with the addition of some useful information such as the assignee, status and resource titles. The submissions can be navigated back and forth by the arrows in the top corner.
+
+The submission can be actioned in multiple ways with the ultimate goal to approve or reject the submission.
+
+![](</assets/Screenshot 2023-08-09 at 13.19.08.png>)
+
+**Rejecting** a submission will mark the contribution as rejected and inform the user, the reviewer will also have the chance to write a message to the user explaining why it was rejected
+Once a submission is rejected the resource will be ready to claim again.
+
+**Approving** a submission will mark the task and contribution as complete depending on the project settings
+
+**Making a correction** is intended for the reviewer to make ad hoc changes to the submission that aren't worth sending back to the user, such as selling mistakes. Once the correction as been made the reviewer can approve the submisison
+
+**Requesting changes** is for bigger changes or corrections. It will mark the contribution as in 'changes requested' and notify the user, like a rejection the reviewer has the chance to write a message
+
+***
+
+When viewing a submission we see the form on the left and canvas on the right. Nested entities can be viewed by clicking into the desired field and the same can be done to view sub nested entities, to return to the root the breadcrumbs along the top can be used.
+![](</assets/Screenshot 2023-08-09 at 12.48.45.png>)
+
+Lastly there is a focus mode under 'View options' button that allows th reviewer to see the submission panel as fullscreen with all the same actions and information as list mode. Using the navigation arrows the reviewer can quickly focus on getting through many reviews.
+
+[]
+
+*To revert back to the old review page: select project settings -> Interface -> Hide reviewer dashboard*

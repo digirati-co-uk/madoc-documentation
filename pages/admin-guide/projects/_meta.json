@@ -8,6 +8,7 @@
   "exporting": "Exporting 🚧",
   "----": { "type": "separator", "title": "Reviews  🚧" },
   "reviews": "Overview  🚧",
+  "review-dashboard": "Review dashboard",
   "-----": { "type": "separator", "title": "Running a project" },
   "project-members": "Project members",
   "project-feedback": "Project feedback",
