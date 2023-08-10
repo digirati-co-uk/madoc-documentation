@@ -6,6 +6,7 @@
   "project-details": "Project details",
   "configuration": "Configuration  🚧",
   "exporting": "Exporting 🚧",
+  "page-blocks": "Page blocks 🚧",
   "----": { "type": "separator", "title": "Reviews  🚧" },
   "reviews": "Overview  🚧",
   "review-dashboard": "Review dashboard",
@@ -17,6 +18,5 @@
   "capture-models": "Overview",
   "model-document": "Documents and data",
   "model-structure": "Structure and choices",
-  "model-playground": "Model playground",
-  "local-autosave": "Local Autosave"
+  "model-playground": "Model playground"
 }
