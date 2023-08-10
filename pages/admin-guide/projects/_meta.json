@@ -17,5 +17,6 @@
   "capture-models": "Overview",
   "model-document": "Documents and data",
   "model-structure": "Structure and choices",
-  "model-playground": "Model playground"
+  "model-playground": "Model playground",
+  "local-autosave": "Local Autosave"
 }
