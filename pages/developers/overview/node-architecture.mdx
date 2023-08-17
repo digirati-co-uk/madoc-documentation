@@ -1,0 +1,126 @@
+# Node Architecture
+
+Most functions of Madoc are implemented in a NodeJS-based backend. A PM2 instance runs 3 processes:
+
+- `server.js` - the main server process
+- `worker.js` - the background worker process (2+ instances)
+- `scheduler.js` - the queue process
+
+The main server is built using [Koa](https://koajs.com/) with lots of custom middleware to handle
+authentication, body parsing, error handling and internationalisation.
+
+- [Slonik](https://github.com/gajus/slonik) is used as the database driver, which is a thin wrapper around the `pg` driver. This is used
+to connect to a Postgres database. Slonik promotes writing SQL directly, rather than using an ORM.
+- [BullMQ](https://docs.bullmq.io/) is used for the queueing system, which is backed by Redis. This is used for background tasks, such as importing
+IIIF resources or dispatching events from the Tasks API.
+- [PM2](https://pm2.keymetrics.io/) is used to manage the processes, and to provide a simple way to manage the logs and restart the processes. It
+also allows us to run multiple instances of the worker process, which is useful for scaling the background tasks.
+
+There are 2 main entry points for the server, an HTTP request coming from the browser, or a background task triggered
+by the BullMQ queue.
+
+## HTTP Route
+
+```ts
+export const exampleRouter: RouteMiddleware = async context => {
+  // Ensure the user has the correct scope from the JWT. This is always
+  // the first thing in the route handler.
+  const { siteId, id: userId } = userWithScope(context, ['site.admin']);
+
+  // We have access to params, query and body from the request.
+  const resourceId = context.params.id;
+  const body = context.requestBody;
+  const query = context.query;
+
+  // We can use the database connection to run queries.
+  // Errors thrown are caught by the error handler middleware.
+  const resource = await context.connection.one(
+    sql`select * from example where id = ${resourceId}`
+  );
+
+  // Or access any of the configured repositories in the context.
+  const site = await context.siteManager.getSiteById(siteId);
+
+  // Finally we can return a response.
+  context.response.body = { test: 'example-route', resource };
+  context.response.status = 200;
+}
+```
+
+## Task handler
+The tasks handler can only make requests through the API. This is because the task handler is run in a separate process
+to the main server, and so does not have access to the database connection.
+
+```ts
+
+// Events that will be handled
+const taskEvents = ['madoc-ts.created', `madoc-ts.subtask_type_status.search-index-task.3`];
+
+export const jobHandler = async (name: string, taskId: string, api) => {
+  switch (name) {
+    case 'created': {
+      // Fetches and sets the status to 'accepted'
+      const task = await api.acceptTask(taskId);
+
+      // Do something with the task, maybe update the tasks state.
+      // ...
+
+      // Update the task to 'completed'
+      await api.updateTask(taskId, { status: 3 });
+      break;
+    }
+  }
+}
+```
+
+## Database repository
+For new database tables, we can create a repository to handle the queries. This is a simple wrapper around the Slonik
+connection, which allows us to write queries in a more readable way. Although this leads to quite a lot of boilerplate,
+it does mean that we can write SQL directly, and we can also use the type system to ensure that we are passing the
+correct parameters and mapping the results correctly.
+
+```ts
+
+export class ExampleRepository extends BaseRepository {
+
+  // Keep all the queries and mutations in one place at the top of the class.
+  static queries = {
+    getThingById: (id: string) => sql<ThingRow>`
+      select * from example where id = ${id}
+    `,
+    listThings: () => sql<ThingRow>`
+      select * from example
+    `,
+  };
+
+  static mutations = {
+    createThing: (id: string, name: string) => sql`
+      insert into example (id, name) values (${id}, ${name})
+    `,
+  };
+
+  // Map the results to a type. This should also be typed.
+  static mapThing(row: ThingRow): Thing {
+    return {
+      id: row.id,
+      name: row.name,
+      otherField: row.other_field,
+    };
+  }
+
+  async getThingById(id: string) {
+    return ExampleRepository.mapThing(
+      await this.connection.one(ExampleRepository.queries.getThingById(id))
+    );
+  }
+
+  async listThings() {
+    const things = await this.connection.many(ExampleRepository.queries.listThings());
+    return things.map(ExampleRepository.mapThing);
+  }
+
+  async createThing(id: string, name: string) {
+    await this.connection.query(ExampleRepository.mutations.createThing(id, name));
+  }
+}
+```

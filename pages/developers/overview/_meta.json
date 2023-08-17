@@ -1,4 +1,8 @@
 {
   "service-architecture": "Service Architecture",
-  "frontend-architecture": "Frontend Architecture"
+  "frontend-architecture": "Frontend Architecture",
+  "node-architecture": "Node Architecture",
+  "design-patterns": "Design Patterns",
+  "extension-points": "Extension Points",
+  "history": "History"
 }
