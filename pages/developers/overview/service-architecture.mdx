@@ -1,0 +1,251 @@
+# Service Architecture
+
+Madoc is made up of a number of services, each of which is responsible for a specific part of the application. The services are:
+
+- Madoc API
+- Tasks API
+- Config API
+- Search + Enrichment API
+- Storage API
+
+Additionally, there is a single persistent database (PostgreSQL) and a cache (Redis) that is available to all services.
+
+There are 5 core pieces of Madoc that are used to build each service. These are:
+- [PostgreSQL](#postgresql)
+- [Site sandboxing](#site-sandboxing)
+- [JWT Authentication](#jwt-authentication)
+- [APIs](#apis)
+- [Tasks + Queue](#tasks--queue)
+
+With these 5 core pieces, Madoc can be extended to support new features and new services. They are the building blocks
+of the application.
+
+## PostgreSQL
+Madoc uses PostgreSQL as the only database. This is used to store all the data that is used by the application. Each
+service has its own schema in the database. This allows for each service to have its own data model and for the data
+to be stored in a way that is optimised for the service. This gives ownership to the services and their migrations.
+
+Extensions that are used by the database are:
+- `uuid-ossp` - This is used to generate UUIDs for the database [Docs](https://www.postgresql.org/docs/current/uuid-ossp.html)
+- `ltree` - This is used to store hierarchical data and search in the database [Docs](https://www.postgresql.org/docs/current/ltree.html)
+
+
+## Site sandboxing
+An installation of Madoc comprises a number of sites. Each site is sandboxed from the others. This means that each site
+can have its own configuration, users, and content. The only thing that is shared between sites is the user database,
+which is shared across all sites. IIIF manifests are cached to speed up importing on other sites.
+
+Users can have different roles on different sites. For example, a user could be an administrator on one site, and a
+contributor on another. This is enforced with JWT tokens given to the user on login for each site.
+
+## JWT Authentication
+Madoc uses JWT tokens for authentication. These tokens are signed with a secret key, and are valid for a configurable
+amount of time. The tokens are used to authenticate requests to the API and are stored in encrypted cookies in the
+browser. The tokens are also used to authenticate requests between services. Tokens that are used by services can
+make requests on behalf of users, and can be configured to have different permissions than the user that they are
+acting on behalf of.
+
+The information stored in the tokens is as follows:
+
+**User or Service ID** (`"sub"`) - A unique identifier for the user or service, shared across multiple sites. This will
+be used to fingerprint actions and could be used to drive lightweight access controls on a per-service, per-scope basis.
+
+**User or Service display name** (`"name"`) - Something that the user can be referred to when presenting the user and
+other users with references to other users. May be persisted by services. This is a
+[public claim](https://tools.ietf.org/html/rfc7519#section-4.2) defined in
+[OpenID Connect Core 5.1](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims)
+
+**Site** (`"iss"`) - Unique identifier for the site that issues the token. This may be an abstract site
+(e.g. a client specific dashboard) or a physically different website. For service tokens, the gateway itself will be
+the issuer.
+
+**Site name** (`"iss_name"`) - In addition to a unique identifier, a human readable site name will be added to the
+token. This allows for UI to be driven from the token, for very light feedback to a user.
+This is a [private claim](https://tools.ietf.org/html/rfc7519#section-4.3)
+
+**User scope** (`"scope"`) - The scope defines the scopes of a site that the user has access to. This will be used
+along side the overall role of the user to determine what the user can read, update and remove. This is
+a [public claim](https://tools.ietf.org/html/rfc7519#section-4.2) defined
+in [rfc8693 4.2](https://tools.ietf.org/html/rfc8693#section-4.2).
+
+A service can request a service token in the form of a JSON object that contains a `scope` and a `service` field.
+
+When making a request to the API Gateway a service can do an action on behalf of another user by sending the following
+headers:
+
+- `x-madoc-user-id: urn:madoc:user:123`
+- `x-madoc-site-id: urn:madoc:site:456`
+
+These _can_ be read by a service if it wishes to support this feature.
+
+#### Example user token
+```json
+{
+    "iss": "urn:madoc:site:123",
+    "sub": "urn:madoc:user:456",
+    "exp": 123233434234,
+    "name": "John Doe",
+    "iss_name": "Site 123",
+    "scope": "scope-1 scope-2 scope-3"
+}
+```
+
+#### Example Service token request
+```json
+{
+  "scope": ["models.admin", "site.admin", "tasks.admin"],
+  "service": {
+    "id": "montague-nlp",
+    "name": "Montague (Service)"
+  }
+}
+```
+
+#### Example resulting service token
+```json
+{
+    "iss": "api-gateway",
+    "sub": "montague-nlp",
+    "exp": 9999999999999,
+    "name": "Montague (Service)",
+    "iss_name": "API Gateway",
+    "scope": "models.admin site.admin tasks.admin"
+}
+```
+
+#### Example parsed user JWT in application (js)
+```js
+const jwt = {
+    token: '==....',
+    user: {
+      id: 'urn:madoc:user:456',
+      service: false,
+      serviceId: undefined,
+      name: 'John Doe',
+    },
+    site: {
+      gateway: false,
+      id: 'urn:madoc:site:123',
+      name: 'Site 123',
+    },
+    scope: ['scope-1', 'scope-2', 'scope-3'],
+    context: ['urn:madoc:site:123'],
+}
+```
+
+#### Example parsed site JWT in application (js)
+```js
+const jwt = {
+    token: '==....',
+    user: {
+      id: 'montague-nlp',
+      service: true,
+      serviceId: 'montague-nlp',
+      name: 'Montague (Service)',
+    },
+    site: {
+      gateway: true,
+      id: 'api-gateway',
+      name: 'API Gateway',
+    },
+    scope: ['models.admin', 'site.admin', 'tasks.admin'],
+    context: ['api-gateway'],
+}
+```
+
+#### Example parsed site JWT in application with custom headers (js)
+Same as above, but with the following headers to act as user:
+- `x-madoc-user-id: urn:madoc:user:123`
+- `x-madoc-site-id: urn:madoc:site:456`
+
+```js
+const jwt = {
+    token: '==....',
+    user: {
+      id: 'urn:madoc:user:123', // <-- x-madoc-user-id
+      service: true,
+      serviceId: 'montague-nlp',
+      name: 'Montague (Service)',
+    },
+    site: {
+      gateway: true,
+      id: 'urn:madoc:site:456', // <-- x-madoc-site-id
+      name: '', // No site name in this scenario.
+    },
+    scope: ['models.admin', 'site.admin', 'tasks.admin'],
+    context: ['urn:madoc:site:456'], // <-- x-madoc-site-id
+}
+```
+
+## APIs
+
+Every service has an API that is exposed to the API Gateway. The API Gateway is responsible for routing requests to
+the correct service. The API Gateway is also responsible for authenticating requests and ensuring that the user has
+the correct permissions to perform the action. Services don't need to validate the JWT token and can trust the information
+that is passed to them. This also makes testing easier as services don't need to mock out the authentication layer.
+
+Most APIs are RESTful, but some are not. Over time these APIs will be documented here for reference.
+
+For public APIs that can be accessed by anyone, the API Gateway will not require a JWT token. These public endpoints
+are usually wrappers around other APIs that are not public and appear under the `/s/{site}/madoc/api` path.
+
+## Tasks + Queue
+
+For information that changes over time Madoc uses a task queue. This is a simple queue that is backed by Redis with
+task information stored in Postgres by the Tasks API. The queue can represent either a single task performed and assigned
+to a user, or a batch of tasks that are performed by a service. The queue is used to perform tasks such as importing
+IIIF manifests, indexing search, and generating OCR. User contributions and reviews are also stored as tasks.
+
+Madoc uses [BullMQ](https://docs.bullmq.io/) for the task queue. This is a simple Redis backed queue that allows for
+tasks to be distributed to workers. The queue is backed by Redis and the Tasks API is responsible for storing task
+information in the database. The queue distributes events that contain the Task ID that can be used to retrieve the
+task information from the Tasks API.
+
+In the main Madoc application there is the ability to listen for events that are emitted by the queue. For example,
+you can listen for when a task is completed and then perform an action, or the assignee changes. This allows for a mix
+of synchronous and asynchronous actions to be performed by services or by user interaction.
+
+Large tasks are broken down into sub-tasks that are then distributed to workers. This allows for large tasks to be
+performed in parallel. For example, when importing a large IIIF manifest, the manifest is broken down into individual
+canvases and then each canvas is imported in parallel. This allows for large manifests to be imported in a reasonable
+amount of time. In this example, each canvas is a sub-task of the manifest import task. There is an event on the manifest
+task that is emitted when all the canvases have been imported.
+
+The list of events available are:
+- `created`
+- `modified`
+- `assigned`
+- `assigned_to`
+- `status`
+- `subtask_created`
+- `subtask_type_created`
+- `subtask_status`
+- `subtask_type_status`
+- `deleted`
+
+The subtask events can be further refined:
+- `subtask_status.3` - when all subtasks are complete
+- `subtask_type_status.export-resource-task.3` - when all subtasks of a specific type are complete
+
+#### Example workflow: Manifest import.
+
+- User posts a manifest and an import task is created
+  - The task has a type of `madoc-manifest-import`
+  - The task has a status of `pending`
+  - The task is configured to listen for the following events:
+      - `created`
+      - `subtask_type_status.madoc-canvas-import.3` (all canvases imported)
+- The task is picked up by a worker and the manifest is imported
+  - The task has a status of `progress`
+  - Each canvas is imported as a subtask
+  - Each subtask has a type of `madoc-canvas-import`
+  - Each subtask has a status of `pending`
+- The worker imports each canvas
+- The worker updates the status of each subtask to `complete`
+- The event `subtask_type_status.madoc-canvas-import.3` is emitted
+  - Madoc will associate each imported canvas with the manifest
+  - Madoc will update the status of the manifest import task to `complete`
+- The import is complete
+
+The workflow allows for the canvases to be imported in parallel, and for the manifest structure to be updated when all canvases
+have been imported and the canvas identifiers are known.
