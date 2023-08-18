@@ -1,7 +1,24 @@
 # Patterns
 
+Madoc uses various patterns with a focus on extensibility and customisation. This helps us to build a system that can be
+used for a wide range of use cases, and allows us to build a system that can be extended in the future.
+
 - Tasks for state transitions
 - Registries for customisations
 - Page blocks + slots for frontend
 - Contextual configuration
+
+## Tasks for state transitions
+
+Madoc uses the Tasks API to represent any action that needs to be performed over a period of time. That could be
+a long-running task, or a task that requires user input. The tasks API allows us to represent these actions in a
+way that can be queried, and can be used to represent the state of the system, or a part of the system - such as a project.
+
+For example, when a user imports a large IIIF Collection we represent this as a task. The task will have subtasks for
+each manifest, and each manifest will have subtasks for each canvas. This allows us to represent the state of the
+import process, and allows us to query the state of the import process. It also allows us to cancel the import process
+at any time, and to resume the import process if it fails.
+
+
+
 

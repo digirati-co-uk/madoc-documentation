@@ -1,0 +1,37 @@
+# User notification API
+
+In Madoc, anywhere in the backend where you have access to the `api` object that has `site.admin` permissions you can
+send a notification to a user. The notification API can be access via `api.notifications`. It contains the following
+methods:
+
+- `getAllNotifications(page = 0)` - returns paginated notifications for the current user.
+- `getNotificationCount()` - returns the number of notifications for the current user.
+- `readAllNotifications()` - marks all notifications as read for the current user.
+- `readNotification(id)` - marks a single notification as read for the current user.
+- `clearAllNotifications()` - clears all notifications for the current user.
+
+Additionally, you can create a notification for a user using the `createNotification` method.
+
+```ts
+await api.notifications.createNotification({
+  id: generateId(),
+  title: 'Title of notification',
+  summary: 'Summary of notification',
+  action: {
+    id: 'task:admin',
+    link: `urn:madoc:task:${taskId}`,
+  },
+  user: 123,
+});
+```
+
+You will have to provide the UUID for the notification, a title, a summary, an action, and the user ID. You can
+expand the action types in the [NotificationCenter](https://github.com/digirati-co-uk/madoc-platform/blob/96966fd64a037d8a4e5d877bee794cf2cce67f50/services/madoc-ts/src/frontend/shared/components/NotificationCenter.tsx#L179) component.
+
+Action types supported:
+
+- `task:admin` - link to a task in the admin interface.
+- `task` - link to a task in the site interface.
+- `manifest` - link to a manifest in the site interface.
+- `user` - link to a users profile in the admin interface. (used for new registration notifications)
+
