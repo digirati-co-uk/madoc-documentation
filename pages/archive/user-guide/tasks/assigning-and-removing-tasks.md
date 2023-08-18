@@ -1,2 +1,0 @@
-# Assigning and removing tasks
-

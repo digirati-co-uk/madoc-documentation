@@ -1,2 +1,0 @@
-# Crowdsourcing data models
-

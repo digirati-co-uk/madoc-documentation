@@ -1,2 +1,0 @@
-# Optimising user contributions
-
