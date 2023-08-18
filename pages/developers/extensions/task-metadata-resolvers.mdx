@@ -1,0 +1,81 @@
+import { Codebase } from '../../../components/codebase';
+
+# Task Metadata Resolvers
+
+Task metadata resolvers use the tasks extension to check if a task has metadata, resolve remote metadata and return or update the task with that metadata.
+They make it easy to request data that might be incomplete or not yet populated on the frontend.
+
+The resolver itself is defined as an interface with three functions, `getKey` that returns a `<Key>`,
+`hasMetadata` as a boolean if a task is passed in and `resolve` as a promise if a task is passed in.
+```ts
+export interface Resolver<Key, T> {
+    getKey(): Key;
+
+    hasMetadata(task: BaseTask): boolean;
+
+    resolve(task: BaseTask): Promise<T | undefined>;
+}
+```
+
+To see the resolver in action, starting on the frontend where a crowdsourcing task is passed into a hook that returns metadata
+
+```ts
+const metadata = useTaskMetadata<{ subject?: SubjectSnippet }>(task);
+```
+that in turn calls `getMetadata` from the `tasks` extension,
+
+```ts
+return api.tasks.getMetadata(task);
+```
+
+`getMetadata` will first check if the task has metadata using `requiresUpdate`, if the metadata exists it returns the existing metadata,
+```ts
+  async getMetadata<T extends BaseTask>(task: T) {
+    if (this.requiresUpdate(task)) {
+      // then fetch from server.
+      return await this.api.publicRequest<any>(`/madoc/api/task-metadata/${task.id}`);
+    }
+
+    return task.metadata;
+  }
+```
+
+Otherwise, the `task-metadata` endpoint used will do a couple of things. It will fetch the remote metadata also defined in the tasks extension
+then it will update the task with the new metadata! So next time metadata is requested from the frontend it will be populated.
+```ts
+export const siteTaskMetadata: RouteMiddleware = async context => {
+  const { siteApi } = context.state;
+
+  const task = await siteApi.getTask(context.params.taskId);
+
+  // Do we need to update the metadata.
+  if (siteApi.tasks.requiresUpdate(task)) {
+    const newMetadata = await siteApi.tasks.remoteMetadata(task, false);
+    const updatedTask = await siteApi.tasks.updateTaskMetadata(task.id, newMetadata);
+
+    context.response.body = updatedTask.metadata;
+    context.response.status = 200;
+    return;
+  }
+
+  context.response.body = task.metadata;
+  context.response.status = 200;
+};
+```
+
+The `remoteMetadata` is what actually calling the resolver class we looked in the beginning, which remember is returning a promise that returns a task (Task: T),
+then the key is used here to specify exactly what we get back.
+```ts
+  async remoteMetadata<T extends BaseTask>(task: T, fresh = false) {
+    const metadata: any = task.metadata || {};
+    for (const resolver of this.resolvers) {
+      if (fresh || !resolver.hasMetadata(task)) {
+        const value = await resolver.resolve(task);
+        metadata[resolver.getKey()] = value || null;
+      }
+    }
+    return metadata;
+  }
+```
+
+<Codebase label="tasks/extention.ts">services/madoc-ts/src/extensions/tasks/extension.ts</Codebase>
