@@ -1,0 +1,109 @@
+import { Callout } from 'nextra/components';
+
+# Page blocks
+
+In Madoc almost all UI elements are built using a block system. This allows for a high degree of flexibility in the UI.
+On any page you can hit "edit" and customise which blocks appear. Each page is split into horizontal sections called
+**slots**. Each slot can contain multiple blocks.
+
+Currently, there is only one layout for the blocks in a slot, but there is a mechanism to allow for different layouts. By
+default, they will be displayed in rows.
+
+![Pages, slots and blocks](</assets/image (1).png>)
+
+## Custom blocks
+
+Page blocks are one of the most extensible features of Madoc. You can create your own blocks and add them to the
+interface through plugins or in the codebase itself.
+
+An example of a custom block can be seen here:
+
+```jsx
+export function HelloWorld(props) {
+  return <div>Hello {props.name || 'world'}!</div>;
+}
+
+blockEditorFor(HelloWorld, {
+  type: 'hello-world',
+  label: 'Hello world',
+  defaultProps: {
+    name: 'World', // This will pre-populate the form
+  },
+  editor: {
+    name: { label: 'Enter a name', type: 'text-field'},
+  },
+});
+```
+
+This block will then be available when you edit a slot on the page. You can specify which "contexts" this block
+requires if you are reading the URL and loading data based on it (e.g. the project ID).
+
+You can read more about custom blocks [here](/developers/page-blocks/custom-blocks)
+
+
+## Slot rules
+
+<Callout emoji="⭐️" type="info">
+  **We are working on a new UI for viewing and editing slot rules.**
+
+  Currently you can make a slot that appears on "all pages of a type" or on a very specific page. In the future
+  you will be able to change the rules for a slot, and have more options for how the slot is displayed.
+</Callout>
+
+When a user overrides the default slot that is defined in the code it is saved into the database with a "filter". This
+filter determines which other pages should use this slot. The available filters are:
+
+* **Project**
+* **Collection**
+* **Manifest**
+* **Canvas**
+
+and two more filters will be added in the future:
+
+* **Topic types**
+* **Topics**
+
+When you visit a page in Madoc you will be within a context. This context is determined by the URL. For example, if you
+visit `/s/projects/abc-123` then you will be in the context of the project with the ID `abc-123`. If you visit
+`/s/projects/abc-123/manifests/789` then you will be in the context of the manifest with the ID `789` and so on.
+
+For each of these potential contexts you may be within on a page you can, in theory, set the following rules for _each_
+context on the slot:
+
+- **Show on all** - This will display the slot on all pages that have some value for the context.
+- **Show on none** - This will display the slot only when there is no value for the context.
+- **Show on specific** - This will display the slot only when the context matches the value.
+
+There are additional fine-tuning with an *allow* and *deny* list for each of the filters.
+
+If you are deep within a project page, viewing a canvas within a manifest which is itself within a collection, the URL
+might too something like:
+
+<code className="my-3 p-2 bg-slate-100 block rounded">
+/s/projects/**abc-123**/collections/**456**/manifests/**789**/canvases/**1011**
+</code>
+
+Here the "context" is:
+- **Project**: `abc-123`
+- **Collection**: `456`
+- **Manifest**: `789`
+- **Canvas**: `1011`
+
+And you would be able to set the rules for each of these contexts. For example, you may want to show a specific
+block at the top of ALL canvases in this collection. For that you could specify rules as follows:
+
+- **Project**: Show on all
+- **Collection**: Show on specific `456`
+- **Manifest**: Show on all
+- **Canvas**: Show on all
+
+This would mean that the block would show on all canvases in the collection `456`.
+
+You could override this rule for a specific manifest by setting the rules as follows:
+
+- **Project**: Show on all
+- **Collection**: Show on specific `456`
+- **Manifest**: Show on specific `789`
+- **Canvas**: Show on all
+
+Although both rules match, this one will have a higher priority because it is more specific.
