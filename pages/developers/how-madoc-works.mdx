@@ -1,3 +1,29 @@
 # How Madoc Works
 
+When the second version of Madoc was planned in 2019 we made an effort to simplify the architecture across the various
+languages and services. The decisions we made then are still in place today.
 
+* Single database for all services
+* Single API endpoint for all services
+* Single method of authorisation for all services
+* Site sandboxing from the start
+* Single method of deployment for all services (Docker)
+* Single method of configuration for all services (config api + environment variables)
+* No requirement of a commercial integration (e.g. AWS or Azure)
+
+These helped to simplify the architecture and make it easier to maintain and develop. There are also decisions that
+were made specifically for the 3 languages/areas that we use in Madoc.
+
+* Frontend
+* Python backend
+* Node backend
+
+This allows us to use the best tool for the job but still have shared patterns and practices across the whole system.
+When starting on a new piece of functionality, these constraints help to guide the design and implementation. A typical
+design process would be:
+
+* Data model + Postgres migrations
+* Database repository
+* API endpoint (with permission considerations)
+* Admin page in frontend for managing the data
+* Frontend page for displaying the data (usually page block).
