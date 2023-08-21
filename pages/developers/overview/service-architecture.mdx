@@ -12,6 +12,9 @@ Madoc is made up of a number of services, each of which is responsible for a spe
 
 Additionally, there is a single persistent database (PostgreSQL) and a cache (Redis) that is available to all services.
 
+![](/diagrams/docker-services.svg)
+
+Each service is a Docker container that is managed by Docker Compose.
 
 ## Madoc API
 The Madoc API is the main API that is used by the frontend. It is responsible for managing users, sites, projects and
@@ -267,6 +270,8 @@ Every service has an API that is exposed to the API Gateway. The API Gateway is 
 the correct service. The API Gateway is also responsible for authenticating requests and ensuring that the user has
 the correct permissions to perform the action. Services don't need to validate the JWT token and can trust the information
 that is passed to them. This also makes testing easier as services don't need to mock out the authentication layer.
+
+![](/diagrams/JWT.svg)
 
 Most APIs are RESTful, but some are not. Over time these APIs will be documented here for reference.
 
