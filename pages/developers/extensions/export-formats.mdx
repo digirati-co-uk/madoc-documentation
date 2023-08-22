@@ -1,3 +1,95 @@
 # Export formats
 
-__todo__
+Export formats allow you to export various data from the system. The following types of data can be exported:
+- Canvases
+- Manifests
+- Projects
+
+In the future we may add:
+- Collections
+- Topics
+- Topic Types
+
+Export formats work by using a configuration object to describe:
+
+- Label and Description of the data to be exported
+- The types supported by the configuration
+- The expected files that will be produced
+
+They also then contain the logic to export the data in the format required. During export, the config will have access
+the API to fetch any data it needs. It can also make external calls to other APIs if required. The export function will
+return a list of files that will be produced. These files will then be zipped up and returned to the user. Since the
+configuration is only responsible for individual "Resources" (e.g. single Canvases, Manifests, Projects), the resulting
+zip file will contain multiple files for each resource, but also may contain multiple configurations. For example, you
+can export all "Canvases" within a project, but also export the project itself.
+
+```ts
+import { ExportFile } from '../../server-export';
+import { ExportConfig } from '../../types';
+
+export const canvasApiExport: ExportConfig = {
+  type: 'canvas-api-export',
+  supportedTypes: ['canvas'],
+  metadata: {
+    label: { en: ['Canvas API'] },
+    description: { en: ['Export from the internal Madoc API'] },
+    filePatterns: ['/manifests/{manifest}/api/{canvas}.json'],
+  },
+  async exportData(subject, options) {
+    if (!options.subjectParent) {
+      return [];
+    }
+
+    return [
+      ExportFile.json(
+        (await options.api.getCanvasById(subject.id)).canvas,
+        `/manifests/${options.subjectParent.id}/api/${subject.id}.json`,
+        true,
+        {}
+      ),
+    ];
+  },
+};
+```
+
+In this example, we are exporting a single canvas from the API. The `supportedTypes` array is used to determine which
+types of data this configuration can be used for. In this case, it can only be used for Canvases. The `metadata` object
+is used to describe the configuration. The `label` and `description` are displayed to the user when they are selecting
+which export format to use. The `filePatterns` array is used to describe the files that will be produced.
+
+With the export formats, we try to be consistent with the file patterns to ensure that multiple configurations produce
+zip files that can be merged together nicely.
+
+In the `exportData` function, we are passed the subject (the canvas in this case) and some additional options. The options
+contain some contextual information about the subject, such as it's parent and also utilities such as the API client.
+
+The `exportData` function should return an array of `ExportFile` objects. These objects are used to describe the file
+that will be produced. The `ExportFile` class has a number of static methods to help you create the file. The available
+methods are:
+
+- `ExportFile.json(data: any, path: string, pretty: boolean = false, metadata: any = {})`
+- `ExportFile.text(data: string, path: string, metadata: any = {})`
+- `ExportFile.csv(data: string, path: string, metadata: any = {})`
+
+We may add support for more formats, such as Binary or XML, in the future.
+
+The `path` argument is used to describe the path of the file within the zip file. The path is relative to the root of
+the zip file. The `metadata` argument is used to describe the file. This is used to display the file to the user. The
+`pretty` argument is only used for JSON files, and will pretty print the JSON.
+
+![](/assets/canvas-export.png)
+
+The user can preview any additional export formats from the Admin UI. This is useful for testing the export format
+before using it on a large project. The code that generates the preview will be run in the browser instead of the
+server.
+
+### Configuration
+
+When a user is exporting data, they will be presented with a list of export formats that they can use. When they
+select a format to use, they will be shown a configuration form. This form is used to configure the export format
+for their specific use case.
+
+[In this example](https://github.com/digirati-co-uk/madoc-platform/blob/5fe33aa7fdba13b5a198b6eb0637cb5594e58d4d/services/madoc-ts/src/extensions/project-export/export-configs/canvas/canvas-model-export.ts)
+you can see an example of a configuration form. The editor for the configuration form is a Shorthand capture model. There
+is then a `hookConfig` function that can be used to customise the form based on the subject. Finally, the output of the
+configuration is made available in the `exportData` function as the `options.config` argument.

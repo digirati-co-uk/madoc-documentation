@@ -3,6 +3,10 @@ import { DocsThemeConfig } from 'nextra-theme-docs';
 import logo from './public/assets/logo.svg';
 
 const config: DocsThemeConfig = {
+  sidebar: {
+    defaultMenuCollapseLevel: 1,
+    autoCollapse: true,
+  },
   logo: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.74 30" width={150}>
       <path

@@ -5,3 +5,67 @@
 - Introduction of Typescript
 - Replacing frontend with Typescript
 - Removal of Omeka + PHP
+
+
+## Omeka-S + Microservices
+Madoc began development in early 2017 in partnership with the National Library of Wales (NLW) and the Indigenous Digital
+Archives (IDA). The goal was to use IIIF and Linked Data to create a platform for the crowdsourcing of metadata, structural
+data, transcriptions and points of interest on images from digital collections.
+
+There was a split between the "Frontend" side and backend services. The frontend was built using Omeka-S, a PHP based
+content management system. The backend was built using a collection of many different microservices written in Java and
+Python and heavily utilising Amazon AWS services. The frontend and backend communicated using many different REST APIs.
+
+The frontend of Omeka was built using Omeka-S theme system, but utilised a custom build-step to compile the frontend
+assets. At the time this was done using Grunt, babel, Sass and a few other tools.
+
+We identified a few issues with this approach:
+- The frontend was difficult to develop and test locally
+- Deployment was difficult and required a lot of manual steps
+- Omeka-S was not designed for the volume of data we were working with
+
+## Consolidation
+
+During the autumn of 2019 we took a step back and look at the platform and where we wanted to go with it. We identified
+a few key areas that we wanted to improve:
+
+- Independent frontend development
+- Easier deployments
+- Less moving parts
+
+And put together a plan to address these issues:
+
+* Single database for all services
+* Single API endpoint for all services
+* Single method of authorisation for all services
+* Site sandboxing from the start
+* Single method of deployment for all services (Docker)
+* Single method of configuration for all services (config api + environment variables)
+* No requirement of a commercial integration (e.g. AWS or Azure)
+
+These changes would allow us to build a platform that was easier to develop, easier to deploy and easier to maintain.
+During the first half of 2020 we began to implement these changes and move the platform forward. During this time we
+were working with [Ghent Centre for Digital Humanities](https://www.ghentcdh.ugent.be/) and [Staatsbibliothek Berlin](https://staatsbibliothek-berlin.de/en/).
+
+## Building a foundation
+
+We decided to rewrite the backend services in Python and to use Django as the framework. We started building some of
+the foundational services that we would need to build the platform. These included:
+
+- Configuration API
+- Tasks API
+- Search API
+- Model API (now merged into Madoc)
+
+The Configuration and Search APIs were built in Python using Django. The Tasks API and Model API was built in Typescript
+using Node.js with the Koa framework.
+
+## Madoc
+
+After the initial development, we started working on a set of APIs and new Admin Frontend that would replace the
+Omeka-S Admin UI. This was built using Typescript and React. We began with replacing the IIIF storage APIs, utilising
+the new Tasks API to handle much larger volumes of data.
+
+Once we replaced the Admin side, we moved to replacing the public side of Omeka-S and eventually removed the PHP
+dependency entirely. However, we still used the Omeka-S database which was stored in MySQL. Towards the end of development
+we migrated the final tables over to Postgres and removed the MySQL dependency.

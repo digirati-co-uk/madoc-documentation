@@ -1,3 +1,41 @@
 # External API
 
-__todo__
+Madoc allows you to create API keys from the Admin interface that can be used to access the Madoc API from external
+applications. These tokens that are created can be customised to have a specific scope, and are each tied to a single
+Madoc site.
+
+![](/assets/admin-api-key.png)
+
+When you create a key, you will get back a `Client ID` and a `Client Secret`. These can be exchanged for a JWT token
+that can then be used to access the API.
+
+![](/assets/admin-api-key-2.png)
+
+Example, exchanging a token in JavaScript:
+
+```js
+const request = await fetch(`https://example.org/s/default/auth/api-token`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    client_id: '...',
+    client_secret: '...',
+  }),
+});
+
+const { token } = await request.json();
+```
+
+You can then use this token to access the API. For example, to get a list of collections:
+
+```js
+const response = await fetch(`https://example.org/api/madoc/iiif/collections`, {
+  headers: {
+    'Authorization': `Bearer ${token}`,
+  },
+});
+
+const { collections, pagination } = await response.json();
+```
