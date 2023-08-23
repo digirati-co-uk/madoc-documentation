@@ -14,35 +14,42 @@ This is a preview of the upcoming features. For the latest stable release, see [
 - [Project members](/admin-guide/projects/project-members)
 - [Project feedback](/admin-guide/projects/project-feedback)
 - [Project updates](/admin-guide/projects/project-updates)
-- 🚧 [New project page blocks](#)
+- [New project page blocks](/admin-guide/projects/page-blocks/overview)
 - [Site terms and conditions](/admin-guide/configuration/guides/site-terms)
-- 🚧 [Configurable auto-complete](#)
-- 🚧 [IIIF Viewer changes](/user-guide/contributing/IIIF-viewer)
+- [Configurable auto-complete](/developers/extensions/autocomplete-sources#configured-sources)
+- [IIIF Viewer changes](/user-guide/contributing/IIIF-viewer)
 - [Review dashboard](/admin-guide/projects/review-dashboard)
 - [Local Autosave](/user-guide/contributing/local-autosave)
 - [Page block translations](/admin-guide/projects/page-blocks/page-block-translations)
-- 🚧 [Technical changes](#technical-changes)
-- 🚧 [Future roadmap and experiments](#roadmap)
-
+- [Technical changes](#technical-changes)
 
 
 ## Technical changes
-
-- Tailwind for styling, gradual migration
-- New code extensions points
-  - Export configurations in plugins
-  - Automation / bots
-  - Web hooks
-  - Tabbed slots
-  - Tailwind-based components as page blocks
-- New crowdsourcing task metadata
+There are some technical changes that have been made in this release that may affect you if you are developing plugins
+or extensions for Madoc.
 
 
-## Roadmap
+### Madoc extensions
 
-- Non-capture model project types
-- Manifest Editor integrations
-- Polygon selectors
-- Visual project templates (with exports)
-- Templated documents + editors
-- Slot templates + block screenshots
+For this release we have [documented](developers/extensions/overview) the available extension points in Madoc. Some extension points are only accessible
+through making changes to codebase, and others have been added to the plugin system.
+
+We have also added some new extension points:
+
+- [Autocomplete sources](/developers/extensions/autocomplete-sources)
+- [Export configurations in plugins](/developers/extensions/export-formats)
+- [Automation / bots](/developers/extensions/task-automation)
+- [Web hooks](/developers/extensions/webhooks)
+- [New crowdsourcing task metadata](/developers/extensions/task-metadata-resolvers)
+
+
+### Tailwind
+
+Currently, Madoc primarily uses [Styled Components](https://styled-components.com/) for styling. This has been a great
+way to get started, but we have found that it is not as easy to maintain as we would like and has not scaled well. We
+have therefore decided to migrate to [Tailwind](https://tailwindcss.com/) for styling new components. This also allows
+us to grab some of the great components that exist in the community and use them in Madoc, linking them up to the page
+block system.
+
+There are around 400 Styled Components used in Madoc currently, so it is unlikely that we will be able to migrate all of
+these in one go. We will therefore be migrating components as we go, and will be using Tailwind for all new components.
