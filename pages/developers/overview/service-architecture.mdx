@@ -1,0 +1,473 @@
+import { Callout } from 'nextra/components';
+
+# Service Architecture
+
+Madoc is made up of a number of services, each of which is responsible for a specific part of the application. The services are:
+
+- Madoc API
+- Tasks API
+- Config API
+- Search + Enrichment API
+- Storage API
+
+Additionally, there is a single persistent database (PostgreSQL) and a cache (Redis) that is available to all services.
+
+![](/diagrams/docker-services.svg)
+
+Each service is a Docker container that is managed by Docker Compose.
+
+## Madoc API
+The Madoc API is the main API that is used by the frontend. It is responsible for managing users, sites, projects and
+many other features of the application. It is also responsible for managing the IIIF manifests and the IIIF API.
+
+The Madoc API has both a public and protected API. The public API allows for anyone to access the API without a JWT
+token. This is used by the frontend to display public content. The protected API requires a JWT token and is used by
+the frontend to perform actions on behalf of the user. The protected API can also used by the other services.
+
+The public API lives at: `/s/{site}/madoc/api` and the protected API lives at: `/api/madoc`.
+
+The full list of data that this API manages:
+
+- Annotation styles
+- Badges
+- Capture models
+- IIIF Resources
+- Projects
+- Media
+- User Notifications
+- Password management
+- Plugins
+- Project notes
+- Project updates
+- Site pages, slots and blocks
+- Site terms
+- System configuration
+- Themes
+- Users
+- User invitations
+- Webhooks
+
+## Tasks API
+The Tasks API is responsible for managing tasks. Tasks are used to represent actions that are done either by user
+interaction or by services. Tasks are used to represent the following:
+
+- **API Actions** - A task that wraps an API call. Will execute the API call when an administrator approves the task.
+- **Crowdsourcing canvas task** - Represents the status of a canvas within a project
+- **Crowdsourcing manifest task** - Represents the status of a manifest within a project
+- **Crowdsourcing project task** - Top level task for a project (other tasks are sub-tasks)
+- **Crowdsourcing review** - A review of a canvas or manifest within a project
+- **Crowdsourcing task** - A task that is assigned to a user to perform an action
+- **Export resource task** - A task that is used to export a resource (manifest, collection, canvas).
+- **Import canvas** - A task that is used to import a canvas
+- **Import collection** - A task that is used to import a collection
+- **Import manifest** - A task that is used to import a manifest
+- **Process canvas OCR** - A task that is used to generate OCR for a canvas
+- **Process manifest OCR** - A task that is used to generate OCR for a manifest (spawns canvas OCR tasks)
+- **Search index task** - A task that is used to index a resource in the search index
+
+The Tasks API does not specifically know about the tasks listed above, and you can create tasks with any type required.
+The task types and rules are defined by the services that use the Tasks API. The Tasks API is responsible for storing
+the task information in the database and for emitting events when the task status changes.
+
+The Task API also has various APIs for managing, searching and returning statistics for tasks.
+
+This project can be found on [GitHub](https://github.com/digirati-co-uk/tasks-api)
+
+## Config API
+
+The config API allows for configuration to be stored in a hierarchical structure. For example, you can store a configuration
+for a site, and then override that configuration for a specific project and then override that configuration for a
+specific manifest. Although we don't use this feature extensively, it does allow for a lot of flexibility when configuring
+the application.
+
+
+## Search + Enrichment API
+
+The Search + Enrichment API is responsible for indexing resources in the search index and for enriching resources with
+data from external services.
+
+## Storage API
+
+The Storage API is responsible for storing media files. It is also responsible for generating thumbnails and other
+derivatives of the media files. It has potential to be configured to work with external storage providers such as
+Amazon S3 or Google Cloud Storage.
+
+It can be found on [GitHub](https://github.com/digirati-co-uk/storage-api)
+
+## Shared concepts
+
+There are 5 core pieces of Madoc that are used to build each service. These are:
+- [PostgreSQL](#postgresql)
+- [Site sandboxing](#site-sandboxing)
+- [JWT Authentication](#jwt-authentication)
+- [APIs](#apis)
+- [Tasks + Queue](#tasks--queue)
+
+With these 5 core pieces, Madoc can be extended to support new features and new services. They are the building blocks
+of the application.
+
+### PostgreSQL
+Madoc uses PostgreSQL as the only database. This is used to store all the data that is used by the application. Each
+service has its own schema in the database. This allows for each service to have its own data model and for the data
+to be stored in a way that is optimised for the service. This gives ownership to the services and their migrations.
+
+Extensions that are used by the database are:
+- `uuid-ossp` - This is used to generate UUIDs for the database [Docs](https://www.postgresql.org/docs/current/uuid-ossp.html)
+- `ltree` - This is used to store hierarchical data and search in the database [Docs](https://www.postgresql.org/docs/current/ltree.html)
+
+
+
+### Site sandboxing
+An installation of Madoc comprises a number of sites. Each site is sandboxed from the others. This means that each site
+can have its own configuration, users, and content. The only thing that is shared between sites is the user database,
+which is shared across all sites. IIIF manifests are cached to speed up importing on other sites.
+
+Users can have different roles on different sites. For example, a user could be an administrator on one site, and a
+contributor on another. This is enforced with JWT tokens given to the user on login for each site.
+
+### JWT Authentication
+Madoc uses JWT tokens for authentication. These tokens are signed with a secret key, and are valid for a configurable
+amount of time. The tokens are used to authenticate requests to the API and are stored in encrypted cookies in the
+browser. The tokens are also used to authenticate requests between services. Tokens that are used by services can
+make requests on behalf of users, and can be configured to have different permissions than the user that they are
+acting on behalf of.
+
+The information stored in the tokens is as follows:
+
+**User or Service ID** (`"sub"`) - A unique identifier for the user or service, shared across multiple sites. This will
+be used to fingerprint actions and could be used to drive lightweight access controls on a per-service, per-scope basis.
+
+**User or Service display name** (`"name"`) - Something that the user can be referred to when presenting the user and
+other users with references to other users. May be persisted by services. This is a
+[public claim](https://tools.ietf.org/html/rfc7519#section-4.2) defined in
+[OpenID Connect Core 5.1](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims)
+
+**Site** (`"iss"`) - Unique identifier for the site that issues the token. This may be an abstract site
+(e.g. a client specific dashboard) or a physically different website. For service tokens, the gateway itself will be
+the issuer.
+
+**Site name** (`"iss_name"`) - In addition to a unique identifier, a human readable site name will be added to the
+token. This allows for UI to be driven from the token, for very light feedback to a user.
+This is a [private claim](https://tools.ietf.org/html/rfc7519#section-4.3)
+
+**User scope** (`"scope"`) - The scope defines the scopes of a site that the user has access to. This will be used
+along side the overall role of the user to determine what the user can read, update and remove. This is
+a [public claim](https://tools.ietf.org/html/rfc7519#section-4.2) defined
+in [rfc8693 4.2](https://tools.ietf.org/html/rfc8693#section-4.2).
+
+A service can request a service token in the form of a JSON object that contains a `scope` and a `service` field.
+
+When making a request to the API Gateway a service can do an action on behalf of another user by sending the following
+headers:
+
+- `x-madoc-user-id: urn:madoc:user:123`
+- `x-madoc-site-id: urn:madoc:site:456`
+
+These _can_ be read by a service if it wishes to support this feature.
+
+#### Example user token
+```json
+{
+    "iss": "urn:madoc:site:123",
+    "sub": "urn:madoc:user:456",
+    "exp": 123233434234,
+    "name": "John Doe",
+    "iss_name": "Site 123",
+    "scope": "scope-1 scope-2 scope-3"
+}
+```
+
+#### Example Service token request
+```json
+{
+  "scope": ["models.admin", "site.admin", "tasks.admin"],
+  "service": {
+    "id": "montague-nlp",
+    "name": "Montague (Service)"
+  }
+}
+```
+
+#### Example resulting service token
+```json
+{
+    "iss": "api-gateway",
+    "sub": "montague-nlp",
+    "exp": 9999999999999,
+    "name": "Montague (Service)",
+    "iss_name": "API Gateway",
+    "scope": "models.admin site.admin tasks.admin"
+}
+```
+
+#### Example parsed user JWT in application (js)
+```js
+const jwt = {
+    token: '==....',
+    user: {
+      id: 'urn:madoc:user:456',
+      service: false,
+      serviceId: undefined,
+      name: 'John Doe',
+    },
+    site: {
+      gateway: false,
+      id: 'urn:madoc:site:123',
+      name: 'Site 123',
+    },
+    scope: ['scope-1', 'scope-2', 'scope-3'],
+    context: ['urn:madoc:site:123'],
+}
+```
+
+#### Example parsed site JWT in application (js)
+```js
+const jwt = {
+    token: '==....',
+    user: {
+      id: 'montague-nlp',
+      service: true,
+      serviceId: 'montague-nlp',
+      name: 'Montague (Service)',
+    },
+    site: {
+      gateway: true,
+      id: 'api-gateway',
+      name: 'API Gateway',
+    },
+    scope: ['models.admin', 'site.admin', 'tasks.admin'],
+    context: ['api-gateway'],
+}
+```
+
+#### Example parsed site JWT in application with custom headers (js)
+Same as above, but with the following headers to act as user:
+- `x-madoc-user-id: urn:madoc:user:123`
+- `x-madoc-site-id: urn:madoc:site:456`
+
+```js
+const jwt = {
+    token: '==....',
+    user: {
+      id: 'urn:madoc:user:123', // <-- x-madoc-user-id
+      service: true,
+      serviceId: 'montague-nlp',
+      name: 'Montague (Service)',
+    },
+    site: {
+      gateway: true,
+      id: 'urn:madoc:site:456', // <-- x-madoc-site-id
+      name: '', // No site name in this scenario.
+    },
+    scope: ['models.admin', 'site.admin', 'tasks.admin'],
+    context: ['urn:madoc:site:456'], // <-- x-madoc-site-id
+}
+```
+
+### APIs
+
+Every service has an API that is exposed to the API Gateway. The API Gateway is responsible for routing requests to
+the correct service. The API Gateway is also responsible for authenticating requests and ensuring that the user has
+the correct permissions to perform the action. Services don't need to validate the JWT token and can trust the information
+that is passed to them. This also makes testing easier as services don't need to mock out the authentication layer.
+
+![](/diagrams/JWT.svg)
+
+Most APIs are RESTful, but some are not. Over time these APIs will be documented here for reference.
+
+For public APIs that can be accessed by anyone, the API Gateway will not require a JWT token. These public endpoints
+are usually wrappers around other APIs that are not public and appear under the `/s/{site}/madoc/api` path.
+
+### Tasks + Queue
+
+For information that changes over time Madoc uses a task queue. This is a simple queue that is backed by Redis with
+task information stored in Postgres by the Tasks API. The queue can represent either a single task performed and assigned
+to a user, or a batch of tasks that are performed by a service. The queue is used to perform tasks such as importing
+IIIF manifests, indexing search, and generating OCR. User contributions and reviews are also stored as tasks.
+
+Madoc uses [BullMQ](https://docs.bullmq.io/) for the task queue. This is a simple Redis backed queue that allows for
+tasks to be distributed to workers. The queue is backed by Redis and the Tasks API is responsible for storing task
+information in the database. The queue distributes events that contain the Task ID that can be used to retrieve the
+task information from the Tasks API.
+
+In the main Madoc application there is the ability to listen for events that are emitted by the queue. For example,
+you can listen for when a task is completed and then perform an action, or the assignee changes. This allows for a mix
+of synchronous and asynchronous actions to be performed by services or by user interaction.
+
+Large tasks are broken down into sub-tasks that are then distributed to workers. This allows for large tasks to be
+performed in parallel. For example, when importing a large IIIF manifest, the manifest is broken down into individual
+canvases and then each canvas is imported in parallel. This allows for large manifests to be imported in a reasonable
+amount of time. In this example, each canvas is a sub-task of the manifest import task. There is an event on the manifest
+task that is emitted when all the canvases have been imported.
+
+The list of events available are:
+- `created`
+- `modified`
+- `assigned`
+- `assigned_to`
+- `status`
+- `subtask_created`
+- `subtask_type_created`
+- `subtask_status`
+- `subtask_type_status`
+- `deleted`
+
+The subtask events can be further refined:
+- `subtask_status.3` - when all subtasks are complete
+- `subtask_type_status.export-resource-task.3` - when all subtasks of a specific type are complete
+
+#### Example workflow: Manifest import.
+
+- User posts a manifest and an import task is created
+  - The task has a type of `madoc-manifest-import`
+  - The task has a status of `pending`
+  - The task is configured to listen for the following events:
+      - `created`
+      - `subtask_type_status.madoc-canvas-import.3` (all canvases imported)
+- The task is picked up by a worker and the manifest is imported
+  - The task has a status of `progress`
+  - Each canvas is imported as a subtask
+  - Each subtask has a type of `madoc-canvas-import`
+  - Each subtask has a status of `pending`
+- The worker imports each canvas
+- The worker updates the status of each subtask to `complete`
+- The event `subtask_type_status.madoc-canvas-import.3` is emitted
+  - Madoc will associate each imported canvas with the manifest
+  - Madoc will update the status of the manifest import task to `complete`
+- The import is complete
+
+The workflow allows for the canvases to be imported in parallel, and for the manifest structure to be updated when all canvases
+have been imported and the canvas identifiers are known.
+
+
+## Shared postgres
+
+Currently the following services use Postgres as their primary database:
+
+* Configuration service
+* Madoc TS
+* Tasks API
+* Model API
+* Search API
+
+Each service requires a database or schema in a database, a username and password. These are configured through environment variables when you are using the docker-compose. Check the development [docker-compose.yml](https://github.com/digirati-co-uk/madoc-platform/blob/v2/docker-compose.yml) for reference on where these are used.
+
+| Environment variable               | Description                  |
+|:-----------------------------------|:-----------------------------|
+| `POSTGRES_DB`                      | The database name            |
+| `POSTGRES_PORT`                    | The port of the database     |
+| `POSTGRES_USER`                    | Default Postgres user        |
+| `POSTGRES_PASSWORD`                | Default Postgres password    |
+| `POSTGRES_MADOC_TS_USER`           | Madoc TS database user       |
+| `POSTGRES_MADOC_TS_SCHEMA`         | Madoc TS database schema     |
+| `POSTGRES_MADOC_TS_PASSWORD`       | Madoc TS database password   |
+| `POSTGRES_TASKS_API_USER`          | Tasks API database user      |
+| `POSTGRES_TASKS_API_SCHEMA`        | Tasks API database schema    |
+| `POSTGRES_TASKS_API_PASSWORD`      | Tasks API database password  |
+| `POSTGRES_MODELS_USER`             | Models API database user     |
+| `POSTGRES_MODELS_SCHEMA`           | Models API database schema   |
+| `POSTGRES_MODELS_PASSWORD`         | Models API database password |
+| `POSTGRES_CONFIG_SERVICE_USER`     | Config API database user     |
+| `POSTGRES_CONFIG_SERVICE_SCHEMA`   | Config API database schema   |
+| `POSTGRES_CONFIG_SERVICE_PASSWORD` | Config API database password |
+| `POSTGRES_SEARCH_SERVICE_USER`     | Search API database user     |
+| `POSTGRES_SEARCH_SERVICE_SCHEMA`   | Search API database schema   |
+| `POSTGRES_SEARCH_SERVICE_PASSWORD` | Search API database password |
+
+These are referenced in the docker compose. There are 2 ways to connect Madoc to an external Postgres. You can create a single database with multiple schemas, or you can split into multiple databases. The docker-compose is an example of the former, where a single database is created \(`postgres`\) and then a schema created for each service, and a role/user with access to that particular schema.
+
+Each service from the list can be configured with different environment variables if you decide to configure the database differently.
+
+An example provisioning script can be found [here](https://github.com/digirati-co-uk/madoc-platform/blob/v2/services/shared-postgres/entrypoint.sh) that takes you through the steps of using and creating the required roles, extensions and schemas.
+
+### Database extensions
+
+The following extensions are required by various services:
+
+| Extension   | Description                                                      | How                                           |
+|:------------|:-----------------------------------------------------------------|:----------------------------------------------|
+| `uuid-ossp` | Allows us to index using UUIDs                                   | `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";` |
+| `ltree`     | Efficient storing of nested elements, used for creating indexes. | `CREATE EXTENSION IF NOT EXISTS "ltree";`     |
+
+### Role search path
+
+When you create a user or role in Postgres you can also set a default search path.
+
+```text
+ALTER ROLE $ROLE_NAME SET search_path TO $SCHEMA_NAME, public;
+```
+
+Although this may not be required - this is how the services are tested and would be recommended.
+
+### Database schemas
+
+All of our services will bootstrap themselves if provided with database credentials on first start up, they will also migrate themselves if any schemas change. There is no requirement to add any tables or data when you create the database.
+
+### Docker image reference
+
+This is a verbose reference for the environment variables required for Postgres for each of the services. A fully up-to-date version of this can be derived from the [docker-compose ](https://github.com/digirati-co-uk/madoc-platform/blob/v2/docker-compose.yml)in the main Madoc repository. You can also see the default values of these match up to the environment variables listed above.
+
+#### Madoc TS
+
+| Environment variable | Description                                                                                                          |
+|:---------------------|:---------------------------------------------------------------------------------------------------------------------|
+| `DATABASE_HOST`      | Resolvable hostname for connecting to the Postgres database. This has to to resolvable from inside of the container. |
+| `DATABASE_NAME`      | The name of the Postgres database                                                                                    |
+| `DATABASE_PORT`      | Port of the Postgres database.                                                                                       |
+| `DATABASE_USER`      | User or role that will be used to connect to Postgres.                                                               |
+| `DATABASE_SCHEMA`    | Schema that will be used when connecting to Postgres.                                                                |
+| `DATABASE_PASSWORD`  | Password matching the role that will be used to connect to Postgres.                                                 |
+
+#### Tasks API
+
+| Environment variable | Description                                                                                                          |
+|:---------------------|:---------------------------------------------------------------------------------------------------------------------|
+| `DATABASE_HOST`      | Resolvable hostname for connecting to the Postgres database. This has to to resolvable from inside of the container. |
+| `DATABASE_NAME`      | The name of the Postgres database                                                                                    |
+| `DATABASE_PORT`      | Port of the Postgres database.                                                                                       |
+| `DATABASE_USER`      | User or role that will be used to connect to Postgres.                                                               |
+| `DATABASE_SCHEMA`    | Schema that will be used when connecting to Postgres.                                                                |
+| `DATABASE_PASSWORD`  | Password matching the role that will be used to connect to Postgres.                                                 |
+
+#### Model API
+
+<Callout type="warning">No longer used since Madoc 2.1</Callout>
+
+| Environment variable | Description                                                                                                          |
+|:---------------------|:---------------------------------------------------------------------------------------------------------------------|
+| `DATABASE_HOST`      | Resolvable hostname for connecting to the Postgres database. This has to to resolvable from inside of the container. |
+| `DATABASE_NAME`      | The name of the Postgres database                                                                                    |
+| `DATABASE_PORT`      | Port of the Postgres database.                                                                                       |
+| `DATABASE_USER`      | User or role that will be used to connect to Postgres.                                                               |
+| `DATABASE_SCHEMA`    | Schema that will be used when connecting to Postgres.                                                                |
+| `DATABASE_PASSWORD`  | Password matching the role that will be used to connect to Postgres.                                                 |
+
+#### Config service
+
+| Environment variable | Description                                                                                                          |
+|:---------------------|:---------------------------------------------------------------------------------------------------------------------|
+| `POSTGRES_HOST`      | Resolvable hostname for connecting to the Postgres database. This has to to resolvable from inside of the container. |
+| `POSTGRES_DB`        | The name of the Postgres database                                                                                    |
+| `POSTGRES_PORT`      | Port of the Postgres database.                                                                                       |
+| `POSTGRES_USER`      | User or role that will be used to connect to Postgres.                                                               |
+| `POSTGRES_SCHEMA`    | Schema that will be used when connecting to Postgres.                                                                |
+| `POSTGRES_PASSWORD`  | Password matching the role that will be used to connect to Postgres.                                                 |
+| `DATABASE_URL`       | A full connection string for connecting to Postgres - required along with other.                                     |
+
+Note: the `DATABASE_URL` can be made using existing environment variables:
+
+```text
+postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@shared-postgres:${POSTGRES_PORT}/${POSTGRES_DB}
+```
+
+#### Search API
+
+| Environment variable | Description                                                                                                          |
+|:---------------------|:---------------------------------------------------------------------------------------------------------------------|
+| `POSTGRES_HOST`      | Resolvable hostname for connecting to the Postgres database. This has to to resolvable from inside of the container. |
+| `POSTGRES_DB`        | The name of the Postgres database                                                                                    |
+| `POSTGRES_PORT`      | Port of the Postgres database.                                                                                       |
+| `POSTGRES_USER`      | User or role that will be used to connect to Postgres.                                                               |
+| `POSTGRES_SCHEMA`    | Schema that will be used when connecting to Postgres.                                                                |
+| `POSTGRES_PASSWORD`  | Password matching the role that will be used to connect to Postgres.                                                 |
+| `DATABASE_URL`       | A full connection string for connecting to Postgres - required along with other.                                     |

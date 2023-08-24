@@ -1,0 +1,22 @@
+{
+  "adding-a-new-project": "Getting started",
+  "templates": "Project templates 🚧",
+  "--": { "type": "separator", "title": "Managing projects" },
+  "adding-content": "Adding IIIF content",
+  "project-details": "Project details",
+  "configuration": "Configuration  🚧",
+  "exporting": "Exporting 🚧",
+  "page-blocks": "Page blocks 🚧",
+  "----": { "type": "separator", "title": "Reviews  🚧" },
+  "reviews": "Overview  🚧",
+  "review-dashboard": "Review dashboard",
+  "-----": { "type": "separator", "title": "Running a project" },
+  "project-members": "Project members",
+  "project-feedback": "Project feedback",
+  "project-updates": "Project updates",
+  "---": { "type": "separator", "title": "Capture models" },
+  "capture-models": "Overview",
+  "model-document": "Documents and data",
+  "model-structure": "Structure and choices",
+  "model-playground": "Model playground"
+}

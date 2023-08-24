@@ -1,0 +1,94 @@
+import { Codebase } from '../../../components/codebase';
+import { Callout } from 'nextra/components';
+
+# Autocomplete sources
+
+There are 4 ways to extend the available autocomplete source that can be used in projects.
+
+- External sources
+- Sources defined in code
+- Configured sources
+- Madoc API sources
+
+
+### External sources
+The first way to have an externally hosted API that can serve up JSON in the format expected by the autocomplete component.
+
+Example autocomplete JSON.
+```json
+{
+  "completions": [
+    {
+      "uri": "http://example.org/1",
+      "label": "Example 1",
+      "description": "This is an example",
+      "resource_class": "author",
+      "score": 123,
+      "language": "en"
+    },
+    {
+      "uri": "http://example.org/2",
+      "label": "Example 2",
+      "description": "This is an example",
+      "resource_class": "author",
+      "score": 123,
+      "language": "en"
+    }
+  ]
+}
+```
+If you create an endpoint that returns this JSON, you can then use it as a data source in your capture models. You
+must ensure that the server you create has the correct CORS headers to allow the request to be made from your Madoc.
+
+### Sources defined in code
+
+You can also define autocomplete sources in code. This is useful if you want to create a custom autocomplete source
+that could be used by others in the community, or one that requires some custom logic to map.
+
+<Codebase label="Sources">services/madoc-ts/src/extensions/completions/sources</Codebase>
+
+We currently have 2 sources defined in code.
+
+- WikiData
+- Worldcat FAST
+
+A custom completion can be added by implementing the `CompletionSource` interface.
+
+```ts
+const mySource: CompletionSource = {
+  async doCompletion(options, context) {
+     options.query; // Query string on the request. (options.page, options.language)
+     context.api; // Access to the Madoc API if needed.
+
+    // Make a fetch call?
+    const resp = await fetch('http://example.org/my-source');
+
+    return { completions: [] }; // Completions should be returned.
+  }
+}
+```
+
+Once created you can register your source in the [completions/extension.ts](https://github.com/digirati-co-uk/madoc-platform/blob/f207ff7d7dba5039ced860e4cab7562685592bc6/services/madoc-ts/src/extensions/completions/extension.ts#L14-L15)
+file.
+
+### Configured sources
+
+<Callout emoji="🚀" type="info">New in <strong>Madoc v2.2</strong></Callout>
+
+You can configure autocomplete sources in the admin panel. This is useful if you want to add a new source without
+having to deploy a new version of Madoc.
+
+![](</assets/create-term.gif>)
+
+### Madoc API sources
+
+There is also a way to configure an autocomplete to use the Madoc API to fetch completions. This is not recommended
+for use in project capture models, but can be useful for configuration that also a shorthand model.
+
+For example, the following URL configured in a model:
+```
+madoc-api://iiif/manifests/:manifest/projects-autocomplete?all=true
+```
+
+Will fetch all projects that a manifest is a part of. This allows for authenticated autocomplete sources to be
+configured. However the endpoints need to be in the completion source format.

@@ -1,0 +1,127 @@
+import { Callout } from 'nextra/components';
+import { IIIFValidator } from '../../../components/IIIFValidator/IIIFValidator';
+
+# Importing IIIF
+
+### Introduction
+
+This guide will show you how to import IIIF into Madoc. IIIF the primary source of data for Madoc and is required
+to get started with Madoc. This guide will show you how to import a single IIIF Manifest from the Madoc Admin interface
+and explore the interface that is created from it on the Madoc frontend.
+
+When you're finished, you'll be ready to create a project using the IIIF Manifest you imported.
+
+### Prerequisites
+
+In order to follow this guide, you'll need:
+
+- A Madoc installation
+- A IIIF Manifest
+
+If you don't have a IIIF Manifest available you can use the following example Manifest:
+
+```
+https://digirati-co-uk.github.io/wunder.json
+```
+
+This Manifest is used in the Madoc documentation and is a good example to use to get started. Once you have finished
+you can delete the Manifest and start with your own.
+
+## Step 1 - Validating your IIIF Manifest
+
+When you import a IIIF Manifest into Madoc, it will upgrade the Manifest to the latest IIIF Presentation API. During
+this process it will try to find small inconsistencies in the Manifest and fix them. This is done to ensure that the
+Manifest is valid and can be used in Madoc. However, this may not always be possible and you may need to fix the
+Manifest before you can import it.
+
+Enter the URL of your Manifest into the IIIF Validator below to check if it is valid.
+
+<IIIFValidator />
+
+When you are using the validator
+you should look for the following:
+- The Manifest loads without any errors
+- All the thumbnails load correctly
+- Clicking on one of the images loads the deep zoom viewer correctly
+
+_If you run into any issues, you can find more information about the IIIF Presentation API and how to fix your Manifest
+in the [IIIF Presentation API Specification](https://iiif.io/api/presentation/3.0/). The [IIIF Presentation Validator](https://presentation-validator.iiif.io/)
+is also a useful tool to help you find and fix issues with your Manifest._
+
+Now you have a valid IIIF Manifest, you can import it into Madoc.
+
+## Step 2 - Importing your IIIF Manifest
+
+To import your IIIF Manifest, you will need to log into your Madoc instance. You can do this by clicking on the
+login button in the top right corner of the page. Once you are logged in, you will your user name in the top right
+corner of the page. If you click on this, you will see a dropdown menu. Click on the `Site Admin` link in this menu to
+go to the Madoc Admin interface.
+
+
+The primary way to navigate the Admin is using the menu on the left hand side of the page. Click on the `Manifests` link
+to go to the Manifests page. This page will show you a list of all the Manifests that have been imported into Madoc. If
+this is the first time you have imported a Manifest, this list will be empty.
+
+![](</assets/Screenshot 2021-05-06 at 17.19.16.png>)
+
+At the top of the page there is a button labelled `Import Manifest`. Click on this button to go to the Import Manifest
+page. On this page you will see a form with a single field labelled `Manifest URL`. Enter the URL of your Manifest into
+this field and click the `Import manifest` button.
+
+![](</assets/Screenshot 2020-09-02 at 20.53.14.png>)
+
+You should see a preview of your Manifest, with all the images that are contained within it. If you are happy with the
+Manifest, click the `Import` button at the top of the page to start the import process.
+
+<Callout type="info">
+  **Tip:** Before you click import you can share the current URL of the page with other administrators to get their
+  feedback on
+  the Manifest before you import it.
+</Callout>
+
+## Step 3 - Tracking the status of your import
+
+Once you have clicked the `Import` button you will be taken to a "task" page that will show you the status of the
+import. If the Manifest you are importing is very large, or if you are importing a Collection you can navigate away
+from this page and come back later to check the status of the import.
+
+![](</assets/Screenshot 2020-09-02 at 20.55.57.png>)
+
+On this page you will see a list of all the images that are being imported. You can click on the label of each image
+to see the status of the import for that image.
+
+The progress bar will give you a quick overview of the status of the import. The orange bar shows you how many images
+are importing and the green bar shows you how many images were successfully imported. If there are any errors during
+the import, the progress bar will turn red.
+
+There is a "Retry" button next to each image that you can press if there is an error during the import. This sometimes
+happens with very large resources. If you press this button, the import will start again for that image.
+
+## Step 4 - Viewing your imported Manifest
+
+Once the import has finished, a preview of the Manifest will appear at the top of this import page. If you navigated
+away from this page you can get back to it by clicking on Manifests in the menu on the left hand side of the page and
+then clicking on "Import manifest" again. The status of the import will be listed under the form.
+
+You can go jump to the Manifest by clicking on the "View Manifest" button under the preview.
+
+This is the Manifest admin page. It shows you all the images inside the Manifest and allows you to edit the Manifest
+metadata. You can also delete the Manifest from this page.
+
+![](</assets/Screenshot 2020-09-02 at 20.59.23.png>)
+
+At the top of the page, under the Manifest label you will see a link to "View on site". This will take you to the
+Madoc frontend site. This is where visitors to your Madoc site will be able to see the Manifest.
+
+On this page you will see a paginated list of the images and the metadata for the Manifest on the right hand side.
+
+<Callout type="info">
+  **Tip:** On any resource page in Madoc, you can get to the Admin page for that resource by clicking on one of the
+  links in the top right corner labelled "View in Admin".
+</Callout>
+
+## Conclusion
+
+You have now imported a IIIF Manifest into Madoc and can view it on the frontend. At this point you can [create a project](../projects/adding-a-new-project) using
+this Manifest. The process for importing a Collection is the same as importing a Manifest. However, if you are importing a large collection you should first
+import one of the Manifests in the Collection to make sure that it is valid and that you are happy with it.

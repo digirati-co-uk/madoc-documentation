@@ -1,0 +1,75 @@
+import { Callout, Card, Cards } from 'nextra/components';
+import { siteConfiguration } from '@madoc.io/config';
+import { ConfigOverview } from '../../../components/ConfigOverview/ConfigOverview';
+
+# Configuration reference
+
+<Cards>
+  <Card
+    title="Interface options"
+    href="./configuration/interface"
+    icon={
+      <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+           aria-hidden="true">
+        <path fill="none" d="M0 0h24v24H0z"></path>
+        <path
+          fill="currentColor"
+          d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2zm0 16H5V7h14v12zm-2-7H7v-2h10v2zm-4 4H7v-2h6v2z"></path>
+      </svg>
+    }
+    arrow
+  />
+  <Card
+    title="Search & browse"
+    href="./configuration/search"
+    icon={
+      <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+           aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+      </svg>
+    }
+    arrow
+  />
+  <Card
+    title="Contribution options"
+    href="./configuration/contributions-options"
+    icon={
+      <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 -960 960 960"
+           aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M480-629 354-755l126-126 126 126-126 126ZM40-160v-160q0-29 20.5-49.5T110-390h141q17 0 32.5 8.5T310-358q29 42 74 65t96 23q51 0 96-23t75-65q11-15 26-23.5t32-8.5h141q29 0 49.5 20.5T920-320v160H660v-119q-36 33-82.5 51T480-210q-51 0-97-18t-83-51v119H40Zm120-300q-45 0-77.5-32.5T50-570q0-46 32.5-78t77.5-32q46 0 78 32t32 78q0 45-32 77.5T160-460Zm640 0q-45 0-77.5-32.5T690-570q0-46 32.5-78t77.5-32q46 0 78 32t32 78q0 45-32 77.5T800-460Z"></path>
+      </svg>
+    }
+    arrow
+  />
+  <Card
+    title="Review process"
+    href="./configuration/reviews"
+    icon={
+      <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 -960 960 960"
+           aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="m363-390 117-71 117 71-31-133 104-90-137-11-53-126-53 126-137 11 104 90-31 133ZM80-80v-740q0-24 18-42t42-18h680q24 0 42 18t18 42v520q0 24-18 42t-42 18H240L80-80Zm134-220h606v-520H140v600l74-80Zm-74 0v-520 520Z"></path>
+      </svg>
+    }
+    arrow
+  />
+  <Card
+    title="Other options"
+    href="./configuration/other"
+    icon={
+      <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 -960 960 960"
+           aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="m753-604-44-94-94-44 94-44 44-94 44 94 94 44-94 44-44 94Zm84 289-29.76-63.24L744-408l63.24-29.76L837-501l29.76 63.24L930-408l-63.24 29.76L837-315ZM314-80l-10-92q-14-2-29-9t-26-17l-78 33-88-144 76-50q-5-17-5-30t5-30l-76-50 88-144 78 33q11-10 26-17t29-9l10.075-92H482l10 92q14 2 29 9t26 17l78-33 88 144-76 50q5 17 5 30t-5 30l76 50-88 144-78-33q-11 10-26 17t-29 9l-10.075 92H314Zm84-194q50 0 82.5-32.5T513-389q0-50-32.5-82.5T398-504q-50 0-82.5 32.5T283-389q0 50 32.5 82.5T398-274Zm0-60q-24 0-39.5-15.5T343-389q0-24 15.5-39.5T398-444q24 0 39.5 15.5T453-389q0 24-15.5 39.5T398-334Zm-34 194h68l8-76q29-7 53-20t43.767-34L602-241l33-52-62-44q11-25 11-52t-11-52l62-44-33-52-65.233 29Q517-529 493-542q-24-13-53-20l-8-76h-68l-8 76q-29 7-53 20t-43.767 34L194-537l-33 52 62 44q-11 25-11 52t11 52l-62 44 33 52 65.233-29Q279-249 303-236q24 13 53 20l8 76Zm34-249Z"></path>
+      </svg>
+    }
+    arrow
+  />
+</Cards>
+

@@ -1,0 +1,150 @@
+# Activity streams
+
+Each stream can be sub-divided (or aggregated depending on how you look at it) into many streams.
+
+### Primary streams
+The top level streams are one-to-one with sites in Madoc. The identifier of the stream is the URL you choose to POST activity too. This allows Madoc, or any system, to have ownership of where streams are. Madoc will use this to publish activity streams for projects and being able to construct that URL with a project identifier alone.
+
+As per the spec, when you fetch a stream it will look like this:
+
+```json
+GET /api/madoc/activity/test-stream/changes
+{
+  "@context": "http://iiif.io/api/discovery/1/context.json",
+  "id": "http://localhost:8888/api/madoc/activity/test-stream/changes",
+  "type": "OrderedCollection",
+  "totalItems": 2,
+  "rights": "http://creativecommons.org/licenses/by/4.0/",
+  "first": {
+    "id": "http://localhost:8888/api/madoc/activity/test-stream/page/0",
+    "type": "OrderedCollectionPage"
+  },
+  "last": {
+    "id": "http://localhost:8888/api/madoc/activity/test-stream/page/1",
+    "type": "OrderedCollectionPage"
+  }
+}
+```
+
+You can publish an event with a POST on the appropriate action endpoint.
+```json
+POST /api/madoc/activity/example-stream/action/update
+{
+  "object": {
+    "id": "http://example.org/collections/2021-05-25T17:49:31+00:00",
+    "type": "Manifest"
+  },
+    "summary": "Creating this manifest with a custom message"
+}
+```
+
+There are also a handful of options, their meaning will become clearer. Defaults shown:
+```http request
+POST /api/madoc/activity/example-stream/action/update
+{
+  "object": {
+    "id": "http://example.org/collections/2021-05-25T17:49:31+00:00",
+    "type": "Manifest"
+  },
+  "summary": "Creating this manifest with a custom message",
+  "options": {
+    "dispatchToSecondaryStreams": false,
+    "preventAddToPrimaryStream": false,
+    "preventUpdateToPrimaryStream": false
+  }
+}
+```
+
+If you publish an _"Update"_ but the item does not exist yet, an _"Add"_ will be created for you. Although probably best to add things before whenever possible.
+
+Fetching the first page of the stream:
+```json
+GET /api/madoc/activity/example-stream/page/0
+{
+  "@context": "http://iiif.io/api/discovery/1/context.json",
+  "id": "http://localhost:8888/api/madoc/activity/example-stream/page/0",
+  "type": "OrderedCollectionPage",
+  "partOf": {
+    "id": "https://example.org/activity/all-changes",
+    "type": "OrderedCollection"
+  },
+  "next": {
+    "id": "http://localhost:8888/api/madoc/activity/example-stream/page/1",
+    "type": "OrderedCollectionPage"
+  },
+  "orderedItems": [
+    {
+      "id": 29,
+      "type": "Add",
+      "object": {
+        "id": "http://example.org/collections/2021-05-25T17:46:35+00:00",
+        "type": "Manifest",
+        "canonical": "http://example.org/collections/2021-05-25T17:46:35+00:00"
+      },
+      "summary": "Automatically created before action: Update",
+      "endTime": "2021-05-25T17:46:35.479Z"
+    },
+    {
+      "id": 30,
+      "type": "Update",
+      "object": {
+        "id": "http://example.org/collections/2021-05-25T17:46:35+00:00",
+        "type": "Manifest",
+        "canonical": "http://example.org/collections/2021-05-25T17:46:35+00:00"
+      },
+      "endTime": "2021-05-25T17:46:35.541Z",
+      "summary": "Creating this manifest with a custom message"
+    }
+  ]
+}
+```
+
+### Secondary streams
+
+Say for example I wanted a stream to track whenever a Manifest has completed being OCR'd. My stream might live at:
+```
+GET /api/madoc/activity/new-ocr/changes
+```
+Now if I was running a few projects and I wanted the new OCR just for that project, I could publish instead to secondary streams and have them aggregated into the one above.
+```
+GET /api/madoc/activity/test-stream/stream/my-ocr-project/changes
+GET /api/madoc/activity/test-stream/stream/my-other-ocr-project/changes
+```
+
+Whenever you publish to a secondary stream, the primary will be updated. Summary field is used whenever updates are made automatically with a description. For example, if you made an `"Update"` and that particular item had not yet been added to the stream, the following 2 items would be added to the primary stream. (Note the summary)
+```json
+[
+    {
+      "id": 31,
+      "type": "Add",
+      "object": {
+        "id": "http://example.org/collections/2021-05-25T17:56:29+00:00",
+        "type": "Manifest",
+        "canonical": "http://example.org/collections/2021-05-25T17:56:29+00:00"
+      },
+      "endTime": "2021-05-25T17:56:29.943Z",
+      "summary": "Automatically created activity from secondary stream: test-project"
+    },
+    {
+      "id": 34,
+      "type": "Update",
+      "object": {
+        "id": "http://example.org/collections/2021-05-25T17:56:29+00:00",
+        "type": "Manifest",
+        "canonical": "http://example.org/collections/2021-05-25T17:56:29+00:00"
+      },
+      "endTime": "2021-05-25T17:56:30.038Z",
+      "summary": "(source: test-project): Creating manifest in secondary stream"
+    }
+]
+```
+
+This simplified aggregation significantly, with the intentional limit of primary and secondary streams - no further nesting. When posting to a secondary stream you can choose if you want the primary stream updated. For example, if you were updating all of the secondary streams, you might only need the first to reflect the change in the primary (Duplicates are caught in the processing algo though).
+
+A space has been left for the opposite interaction where posting an event to the primary stream can propagate that change down to  the secondary streams. Currently, each stream has its own distinct set of items, and this does result in duplication in the database. However, it does _avoid_ duplication in the streams themselves if you were to simply aggregate changes.
+
+### Data model
+This application for the most part does not care about which changes you make, aside from ensuring consistency and validity around create/add before delete/remove. Applications using this feature/endpoint will have ownership of creating and parsing the objects. ID / Type are all that are required, along with a valid action.
+
+### Genesis / Refresh
+The `Refresh` activity is not currently supported, and we don't have a use-case currently where we need it.

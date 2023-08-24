@@ -1,0 +1,32 @@
+# Overview
+
+Madoc is a large system with lots of core pieces that will change slowly over time. It has a lot of complexity in order
+to support the various needs of the platform. However, there are a number of **extension points** that are great
+opportunities to extend the platform without having to worry about these core pieces, and thus complexity and potential
+cost.
+
+The extension points offer clearly defined ways to extend the platform, and are designed to be as simple as possible to
+implement. This section will explain the various extension points and how to use them. This will be a reference guide
+for developers but also for those who want to understand how the platform works and potentially contribute to the
+future of the platform.
+
+## Extension points
+
+- [Autocomplete sources](./autocomplete-sources.mdx) - extend the data sources available for autocomplete
+- [Capture model fields](./capture-model-fields.mdx) - add new input options for capture models, used in projects
+- [Configuration](./configuration.mdx) - add new configuration options to the platform
+- [External API](./external-api.mdx) - add new ways to interact with the API
+- [Page blocks](./page-blocks.mdx) - add new blocks to the page builder
+- [Plugins](./plugins.mdx) - create new plugins, or expand the plugin API that is available
+- [Project templates](./project-templates.mdx) - add new project templates to make it easier to create projects
+- [Task automation](./task-automation.mdx) - add new ways to automate tasks using "bots"
+- [Task metadata resolvers](./task-metadata-resolvers.mdx) - add new ways to resolve metadata for tasks
+- [Themes](./themes.mdx) - create new themes for the platform, or new ways to customise the theme
+- [User notifications](./user-notifications.mdx) - add new ways to notify users of events
+- [Export formats](./export-formats.mdx) - add new ways to export data from Madoc
+- [Webhooks](./webhooks.mdx) - add new web hook triggers to the platform
+
+## Future extension points
+
+- [Login Providers](./login-providers.mdx) - add new ways to log into the platform
+- [Custom project type](./custom-project-type.mdx) - add new non-capture model projects to the platform

@@ -1,0 +1,45 @@
+
+.badge {
+    padding: 0 0.8em;
+    border-radius: 4px;
+    font-size: 0.8em;
+    display: inline-block;
+    align-self: center;
+}
+.assigenedBadge {
+    composes: badge;
+    color: #8a5f9d;
+    border: 2px solid #8a5f9d;
+}
+
+.progressBadge {
+    composes: badge;
+    color: #2e6ba9;
+    border: 2px solid #2e6ba9;
+}
+
+.submittedBadge {
+    composes: badge;
+    color: #7d6352;
+    border: 2px solid #7d6352;
+}
+
+.approveddBadge {
+    composes: badge;
+    color: #417525;
+    border: 2px solid #417525;
+}
+
+.rejecteddBadge {
+    composes: badge;
+    color: #a61a02;
+    border: 2px solid #a61a02;
+}
+
+.changedBadge {
+    composes: badge;
+    color: #2e6ba9;
+    border: 2px solid #2e6ba9;
+}
+
+

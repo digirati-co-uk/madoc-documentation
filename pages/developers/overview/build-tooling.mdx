@@ -1,0 +1,58 @@
+# Build & Tooling
+
+Madoc uses various open source tools and libraries to build and run the application. This includes:
+
+- Vite
+- Docker images
+- GitHub Actions
+- Jest testing
+- Storybook
+- NPM package publishing
+
+
+### Vite
+
+Vite is a build tool for modern web applications. It is used to bundle the Madoc application and its dependencies. It is
+also used to run the development server. It also handles code-splittings and lazy-loading of modules.
+
+### Docker images
+
+Madoc uses Docker images to run the application in production. The Docker images are built using GitHub Actions and
+published to GitHub Container Registry. The images are then pulled and run on the production server. The main Madoc,
+Task API and Storage API images are based on the official Node.js image (`node:18-bullseye`). Python images are based on
+the official Python image (`python:3.8-slim-bullseye`).
+
+### GitHub Actions
+
+GitHub Actions are used to build and test the application. The actions are defined in the `.github/workflows` directory.
+The actions are run on every push to the repository. The actions are also used to build and publish the Docker images
+to GitHub Container Registry. The actions will also run on pull requests and publish preview pull request images e.g. `pr-123`
+to GitHub Container Registry for testing.
+
+Git tags are used to trigger the release action. The release action will build and publish the Docker images to GitHub.
+
+### Jest testing
+
+Jest is used to run unit tests. The tests are defined in the `__tests__` directory. The tests are run using GitHub
+Actions on every push to the repository.
+
+### Storybook
+
+Storybook is used to develop and test components in isolation. The stories are defined in the `stories` directory. The
+stories are deployed using Netlify.
+
+You can view the Storybook here: https://madoc-storybook.netlify.app/
+
+### NPM package publishing
+
+Madoc uses NPM packages to share code between the different applications. The packages are published using
+CodeSandbox CI currently but will be moved to GitHub Actions in the future.
+
+The list of NPM packages is as follows:
+
+* `@madoc.io/components` - Selection of Madoc frontend components
+* `@madoc.io/config` - Latest configuration capture models
+* `@madoc.io/capture-models` - UI for editing and rendering capture models
+* `@madoc.io/registry` - Shared dependency for React providers / context
+
+New packages will be added over time.

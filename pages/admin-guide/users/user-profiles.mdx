@@ -1,0 +1,58 @@
+import { Callout } from 'nextra-theme-docs';
+import { CaptureModelPlayground } from '../../../components/CaptureModelPlayground/CaptureModelPlayground.lazy';
+
+
+# User profiles
+
+<Callout emoji="🚀" type="info">New in <strong>Madoc v2.2</strong></Callout>
+
+Introduced in Madoc v2.2 users who register to the site can fill out details that you specify to fill out a profile that
+is visible publicly and to administrators. Users decide which individual fields are visible to admins and to other
+members of the site. Additionally, recent submissions and statistics are visible.
+
+
+![](</assets/user-profile-example.png>)
+
+
+User profiles must be enabled in the Admin of Madoc. Users are global, and shared across different sites on the same
+installation of Madoc. You find the configuration for the user profile fields under Global -> Global config in the sidebar.
+
+![](</assets/global-config-admin-menu.png>)
+
+From here you will see the list of built-in fields that Madoc provides and a text area where you can create your own.
+
+![](</assets/admin-config-profiles.png>)
+
+Once you check the boxes for the built-in fields, these will be visible to users when they go to edit their profile.
+
+The custom fields use a format known as the "Capture model shorthand". Each line in the text area will create a new
+field that can be filled out by a user for their profile. This may be used in the future to provide more advanced
+options for the user profile such as dropdown menus.
+
+You can try out the shorthand format here and quickly see what it produces on the right hand side by pressing "preview"
+at the bottom.
+
+<CaptureModelPlayground
+  initial={`first_name {@label/First name}\nlast_name {@label/Last name}`}
+  defaultType="text-field"
+/>
+
+Once you have enabled the fields that you want users to fill in, and optionally created some custom fields they will be
+available for users to fill in. Additionally, for each field enabled, and each new custom field a visibility option
+will also be shown.
+
+![](</assets/user-profile-visibility.png>)
+
+This ensures that users know what information they are sharing, and who can see it.
+
+If you enable the "gravitar" field, users will have the option to use the email they registered with as a gravitar
+profile image. This profile image functionality is provided by Automattic (creators of Wordpress) and allows users
+to create a profile image that is used across many services such as Slack, Wordpress and GitHub. More information can
+be found [here](https://en.gravatar.com/)
+
+With the new project page changes, links to users profiles will start to appear more, giving opportunity for users to
+see each others work and feel more like a community. If you have feedback on these changes, or ideas for how this
+feature can evolve please [open a discussion](https://github.com/digirati-co-uk/madoc-platform/discussions) on
+the Madoc GitHub.
+
+

@@ -1,0 +1,11 @@
+{
+  "service-architecture": "Service Architecture",
+  "frontend-architecture": "Frontend Architecture",
+  "python-architecture": "Python Architecture",
+  "node-architecture": "Node Architecture",
+  "design-patterns": "Design Patterns",
+  "build-tooling": "Build & Tooling",
+  "history": "History",
+  "code-base": "Code base",
+  "tech-stack": "Tech Stack"
+}

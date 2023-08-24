@@ -1,0 +1,50 @@
+{
+  "id": 9666,
+  "type": "Canvas",
+  "thumbnail": [
+    {
+      "id": "https://iiif.wellcomecollection.org/thumbs/b18035723_0001.JP2/full/290,400/0/default.jpg",
+      "type": "Image",
+      "format": "image/jpg"
+    }
+  ],
+  "height": 3543,
+  "width": 2569,
+  "source_id": "https://iiif.wellcomecollection.org/presentation/b18035723/canvases/b18035723_0001.JP2",
+  "items": [
+    {
+      "id": "https://iiif.wellcomecollection.org/presentation/b18035723/canvases/b18035723_0001.JP2/annotation-page",
+      "type": "AnnotationPage",
+      "items": [
+        {
+          "id": "https://iiif.wellcomecollection.org/presentation/b18035723/canvases/b18035723_0001.JP2/painting/anno",
+          "type": "Annotation",
+          "motivation": "painting",
+          "target": "https://iiif.wellcomecollection.org/presentation/b18035723/canvases/b18035723_0001.JP2",
+          "body": {
+            "id": "https://iiif.wellcomecollection.org/image/b18035723_0001.JP2/full/742,1024/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "height": 1024,
+            "width": 742,
+            "service": [
+              {
+                "@id": "https://iiif.wellcomecollection.org/image/b18035723_0001.JP2",
+                "@type": "ImageService2",
+                "profile": "level2",
+                "protocol": "http://iiif.io/api/image",
+                "width": 2569,
+                "height": 3543
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "label": {
+    "none": [
+      "-"
+    ]
+  }
+}

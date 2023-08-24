@@ -1,0 +1,182 @@
+# Capture model fields
+
+An important extension point for projects is the ability to add new capture model field types. This allows you to
+change the forms and UI that is presented to a user when they are contributing to a project. These fields are building
+blocks that can be used together to create a full capture model.
+
+Currently, the following fields are supported:
+- **Autocomplete Field** - Shows a dropdown combo box with a list of options. The options can be fetched from a remote API.
+- **Checkbox Field** - Shows a single checkbox.
+- **Checkbox List Field** - Shows a list of checkboxes, with optional inline labels and descriptions for each.
+- **Color Field** - Shows a color picker.
+- **Dropdown Field** - Shows a dropdown combo box with a list of options, there is also a compact inline variation
+- **HTML Field** - Shows a rich text editor.
+- **International Field** - Shows a field where a user can select a language, and then enter a value for that language.
+- **Tagged Text Field** - A rich text editor configured to work with Transcription terminology tags.
+- **Text Field** - Shows a single line text input.
+
+There are also some internal field types that are only used by Madoc for it's Admin interface:
+
+- **Media explorer** - Allows the user to select an image from the media library.
+- **Canvas explorer** - Allows the user to select a single canvas from content in Madoc
+- **Collection explorer** - Allows the user to select a single collection from content in Madoc
+- **Border Field** - Allows the user to draw a border on an image.
+
+## Creating a new field
+
+There are a few parts that make up a custom field. These are captured in a "Field specification" object.
+
+Here is the specification for the "Text Field":
+```ts
+import React from 'react';
+import { registerField } from '../../../plugin-api/global-store';
+import { FieldSpecification } from '../../../types/field-types';
+import { TextField, TextFieldProps } from './TextField';
+import { TextFieldPreview } from './TextField.preview';
+
+const specification: FieldSpecification<TextFieldProps> = {
+  label: 'Text field',
+  type: 'text-field',
+  description: 'Simple text field for plain text',
+  Component: TextField,
+  defaultValue: '',
+  allowMultiple: true,
+  maxMultiple: 99,
+  required: false,
+  defaultProps: {},
+  Editor: React.lazy(() => import(/* webpackChunkName: "field-editors" */ './TextField.editor')),
+  TextPreview: TextFieldPreview,
+};
+
+registerField(specification);
+
+export default specification;
+```
+
+A few things to note here:
+- The `type` field is used to identify the field
+- The `Component` field is the React component that will be rendered when the field is used in a project
+- The `Editor` field is the React component that will be rendered when the field is used in the project editor
+- The `TextPreview` field is the React component that will be rendered when you view the project output
+
+You can specify some default props, a default value and some other options specific to the field.
+
+The `registerField` function is used to register the field with the global store. Internal fields shouldn't be
+registered. (`registerField` may change in the future).
+
+The `Component` has a few props that are passed to it such as `value` and `setValue`, along with any other props that
+you added in your `Editor` component.
+
+Here is a simplified version of the `TextField` component
+```tsx
+export interface TextFieldProps extends BaseField {
+  id: string;
+  type: 'text-field';
+  placeholder?: string;
+  required?: boolean;
+  multiline?: boolean;
+  previewInline?: boolean;
+  minLines?: number;
+  value: string;
+  disabled?: boolean;
+}
+
+export const TextField: FieldComponent<TextFieldProps> = ({
+  value,
+  id,
+  placeholder,
+  minLines,
+  multiline,
+  updateValue,
+  disabled,
+  required,
+}) => {
+  const { t: tModel } = useModelTranslation();
+  const tPlaceholder = placeholder ? tModel(placeholder) : ' ';
+
+  return (
+    <StyledFormInputElement
+      name={id}
+      id={id}
+      placeholder={tPlaceholder}
+      value={value || ''}
+      disabled={disabled}
+      required={required}
+      onChange={e => updateValue(e.currentTarget.value)}
+    />
+  );
+};
+```
+
+You can see that the `value` is passed in, along with an `updateValue` function. This is used to update the value of
+the field. The `id` is also passed in, which is used to identify the field in the form. The type is also passed in, but
+this is not used in the component. The other fields `placeholder`, `minLines`, `multiline`, `disabled` and `required` are
+all custom props that are passed in from the `Editor` component.
+
+
+Here is the `Editor` component for the `TextField`:
+```tsx
+type Props = {
+  placeholder?: string;
+  required?: boolean;
+  multiline?: boolean;
+  previewInline?: boolean;
+  minLines?: number;
+};
+
+const TextFieldEditor: React.FC<Props> = ({ children, ...props }) => {
+  return (
+    <>
+      <StyledFormField>
+        <StyledFormLabel>
+          Placeholder
+          <Field
+            as={StyledFormInputElement}
+            type="text"
+            name="placeholder"
+            defaultValue={props.placeholder}
+            required={false}
+          />
+        </StyledFormLabel>
+      </StyledFormField>
+      <StyledFormField>
+        <StyledFormLabel>
+          <Field as={StyledCheckbox} type="checkbox" name="multiline" defaultValue={props.multiline} required={false} />
+          Allow multiline input
+        </StyledFormLabel>
+      </StyledFormField>
+      <StyledFormField>
+        <StyledFormLabel>
+          Minimum lines
+          <Field
+            as={StyledFormInputElement}
+            type="number"
+            name="minLines"
+            defaultValue={props.minLines}
+            required={false}
+          />
+        </StyledFormLabel>
+      </StyledFormField>
+      <StyledFormField>
+        <StyledFormLabel>
+          <Field
+            as={StyledCheckbox}
+            type="checkbox"
+            name="previewInline"
+            defaultValue={props.previewInline}
+            required={false}
+          />
+          Preview text as inline (span)
+        </StyledFormLabel>
+      </StyledFormField>
+    </>
+  );
+};
+
+export default TextFieldEditor;
+```
+
+The editor should be a partial HTML Form with `name` attributes on the fields. The `defaultValue` is used to set the
+initial value of the field. When this is displayed, it will be saved on form submission, and the `name` and `value` of
+each field will be saved as a key-value pair in the capture model. They will then be made available to the `Component`
+when it is rendered.

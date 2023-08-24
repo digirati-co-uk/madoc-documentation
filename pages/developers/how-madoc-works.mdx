@@ -1,0 +1,43 @@
+# How Madoc Works
+
+When the second version of Madoc was planned in 2019 we made an effort to simplify the architecture across the various
+languages and services. The decisions we made then are still in place today.
+
+* Single database for all services
+* Single API endpoint for all services
+* Single method of authorisation for all services
+* Site sandboxing from the start
+* Single method of deployment for all services (Docker)
+* Single method of configuration for all services (config api + environment variables)
+* No requirement of a commercial integration (e.g. AWS or Azure)
+
+These helped to simplify the architecture and make it easier to maintain and develop. There are also decisions that
+were made specifically for the 3 languages/areas that we use in Madoc.
+
+* [Frontend architecture](./frontend-architecture.mdx)
+* [Python architecture](./python-architecture.mdx)
+* [Node architecture](./node-architecture.mdx)
+
+Additionally, some shared services and APIs were created to support features that are common across the whole system.
+
+- **Tasks API** - API for modelling tasks, with a queue and worker for responding to changes to those tasks.
+- **Config API** - API for storing and retrieving contextual configuration values.
+- **Storage API** - Single API for storing and retrieving files from the storage system - adaptable to different storage
+  backends.
+
+These services aim to solve a narrow problem and integrate with larger parts of the system. Other services can abstract
+these services to provide a more specific interface for a particular use case. The Tasks API, for example, does not
+know what a particular "type" of task is for, but you can tell it to dispatch events when a task is created, updated, or
+it's status changes and then respond to those events. Similarly, the config API does not enforce any structure to the
+config, or rules on what contexts are available - but provides you with the API to store and retrieve values in useful
+ways.
+
+This allows us to use the best tool for the job but still have shared patterns and practices across the whole system.
+When starting on a new piece of functionality, these constraints help to guide the design and implementation. A typical
+design process would be:
+
+* Data model + Postgres migrations
+* Database repository
+* API endpoint (with permission considerations)
+* Admin page in frontend for managing the data
+* Frontend page for displaying the data (usually page block).

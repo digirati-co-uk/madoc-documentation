@@ -3,6 +3,10 @@
     "title": "Home",
     "type": "page"
   },
+  "releases": {
+    "title": "Releases",
+    "type": "page"
+  },
   "admin-guide": {
     "title": "Admin guide",
     "type": "page"
@@ -13,10 +17,6 @@
   },
   "developers": {
     "title": "Developers",
-    "type": "page"
-  },
-  "archive": {
-    "title": "Archive docs",
     "type": "page"
   }
 }

@@ -1,0 +1,27 @@
+import { ExportOverview } from '../../../components/ExportOverview/ExportOverview';
+
+# Exporting project data
+
+Madoc allows you to export your project data in a number of different formats. You can preview any of the formats by
+navigating to a IIIF resource in the Admin and clicking on the "JSON" tab. This will list the available formats for
+this specific resource.
+
+If you want to export the entire project, you can do so by navigating to the project overview page and clicking on the
+"Export" tab. This will allow you to choose the formats you want to export.
+
+The available formats are:
+
+<ExportOverview />
+
+
+## CSV Exports
+
+When you export a project using the CSV export, you will see a flat version of the data in the project. You can optionally
+choose a nested entity to export (allowing multiple per resource). Along with the data you also get identifiers for the
+manifest, canvas, capture model and a unique identifier for the row (doc_id).
+
+| model_id                             | doc_id                               | field_a         | field_b         | manifest | canvas |
+|--------------------------------------|--------------------------------------|-----------------|-----------------|----------|--------|
+| 14977ce1-8293-4467-88d6-f8bb58a02a96 | 7be69729-c802-4c85-8310-11a3f920a666 | field a entry 1 | field b entry 1 | 272277   | 272283 |
+| 14977ce1-8293-4467-88d6-f8bb58a02a96 | 7be69729-c802-4c85-8310-11a3f920a667 | field a entry 2 | field b entry 2 | 272277   | 272283 |
+| 14977ce1-8293-4467-88d6-f8bb58a02a96 | 7be69729-c802-4c85-8310-11a3f920a668 | field a entry 3 | field b entry 3 | 272277   | 272283 |

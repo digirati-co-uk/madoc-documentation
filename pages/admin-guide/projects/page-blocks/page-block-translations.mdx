@@ -1,0 +1,33 @@
+import { Callout } from 'nextra-theme-docs';
+
+# Page block translations
+
+<Callout emoji="🚀" type="info">New in <strong>Madoc v2.2</strong></Callout>
+
+When editing page blocks there is now the option to configure language options, meaning you can show separate blocks for different site locals.
+This is especially useful for custom blocks where auto language translation isn't possible
+
+When in edit mode for each block there is a 'Set language' button which is used to configure the languages, we will use the 'Heading 1' block in this example.
+
+![](</assets/Screenshot 2023-08-10 at 17.46.38.png>)
+
+The options given are based on which languages are installed on the site. By setting this block as English(en) it will only show on the English lang site.
+
+![](</assets/Screenshot 2023-08-10 at 16.53.11.png>)
+
+If we want to show another block for the Welsh site we first have to add a new 'Heading 1' block. Then adjust the language options for Cymraeg(cy).
+
+We also want to make sure that the Language sort key is the same on both blocks. This is what will allow the switching.
+
+Now when exiting edit mode and switching between English and Welsh you will see the two separate blocks!
+
+![](</assets/Screenshot 2023-08-10 at 17.51.52.png>)
+![](</assets/Screenshot 2023-08-10 at 17.51.45.png>)
+
+Notice if changing to a third language, in this case Dutch, no block is rendered? If we go back into edit mode and select 'Use as fallback'
+
+![](</assets/Screenshot 2023-08-10 at 17.55.39.png>)
+
+Now the English block is rendered if there is no block available for the chosen language!
+
+![](</assets/Aug-10-2023 17-27-53.gif>)

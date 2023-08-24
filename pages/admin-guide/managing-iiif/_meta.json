@@ -1,0 +1,11 @@
+{
+  "iiif-in-madoc": "IIIF in Madoc",
+  "importing": "Importing IIIF",
+  "--": { "type": "separator", "title": "Resource types" },
+  "collections": "Collections",
+  "manifests": "Manifests",
+  "canvases": "Canvases",
+  "---": { "type": "separator" },
+  "language-fields": "Language fields",
+  "metadata": "Metadata"
+}

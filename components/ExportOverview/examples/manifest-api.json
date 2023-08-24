@@ -1,0 +1,89 @@
+{
+  "id": 2,
+  "thumbnail": "https://view.nls.uk/iiif/7443/74438561.5/full/256,/0/default.jpg",
+  "published": true,
+  "source": "https://view.nls.uk/manifest/7446/74464117/manifest.json",
+  "viewingDirection": "left-to-right",
+  "label": {
+    "none": [
+      "Forth Bridge illustrations 1886-1887"
+    ]
+  },
+  "metadata": [
+    {
+      "label": {
+        "none": [
+          "Title"
+        ]
+      },
+      "value": {
+        "none": [
+          "Forth Bridge illustrations 1886-1887 test",
+          "Forth Bridge illustrations 1886-1887"
+        ]
+      }
+    },
+    {
+      "label": {
+        "none": [
+          "Description"
+        ]
+      },
+      "value": {
+        "none": [
+          "40 black-and-white photographs capturing the construction of the Forth Bridge by Glasgow-based Sir William Arrol & Co. Close-up and distance views of superstructure, cantilevers, lifting platforms and viaduct. Taken at weekly or fortnightly intervals from 1886-1887 by Philip Phillips, son of one of the contractors. Silver gelatin prints."
+        ]
+      }
+    },
+    {
+      "label": {
+        "none": [
+          "Part reference"
+        ]
+      }
+    },
+    {
+      "label": {
+        "none": [
+          "Shelfmark"
+        ]
+      },
+      "value": {
+        "none": [
+          "RB.l.229"
+        ]
+      }
+    },
+    {
+      "value": {
+        "none": [
+          "<a href=\"http://digital.nls.uk/74464117\">View in our digital gallery</a>"
+        ]
+      }
+    },
+    {
+      "label": {
+        "none": [
+          "Full conditions of use"
+        ]
+      },
+      "value": {
+        "none": [
+          "You have permission to make copies of this work under the <a target=\"_top\" href=\"http://creativecommons.org/licenses/by/4.0/\">Creative Commons Attribution 4.0 International Licence</a> unless otherwise stated."
+        ]
+      }
+    }
+  ],
+  "requiredStatement": {
+    "label": {
+      "none": [
+        "Attribution"
+      ]
+    },
+    "value": {
+      "none": [
+        "National Library of Scotland<br/>License: <a target=\"_top\" href=\"http://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a>"
+      ]
+    }
+  }
+}

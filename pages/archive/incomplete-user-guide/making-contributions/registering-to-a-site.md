@@ -1,2 +1,0 @@
-# Registering to a site
-

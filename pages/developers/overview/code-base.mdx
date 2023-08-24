@@ -1,0 +1,33 @@
+import {Callout} from "nextra/components";
+
+# Code base
+
+<Callout emoji="🚧" type="warning"> This page is a WIP </Callout>
+
+Madoc is made up of a large codebase called `madoc-platform` the root holds the `.env` and `docker-compose` files. Under `/services` we can find `/gateway`, `/shared-postgress` and `/madoc-ts`.
+Madoc-ts is where the bulk of the Madoc code is and can be thought of as the frontend root, here is where the `node_modules`, `package.json` ect can be found.
+
+From there, `/src/frontend/` is split into three main parts:
+
+`/admin/ ` - code used in the admin side of the site \
+`/site/` -   code used in the frontend side of the site \
+`/shared/` - code used in both
+
+within these sections are some common directories like;
+
+`components` - tsx files that declare styles and use features  \
+`pages` - site pages and loaders that are made up of slots and blocks or features \
+`hooks` - Helpful functions specific to their parent directory \
+`features` - Functional tsx files that import components and usually handle data. They can contain subdirectories that further specify where they're used
+
+Some other important directories to note:
+
+`site/blocks` contain page blocks used across madoc, where as `shared/page-blocks` contain the styles, components, features and hooks for rendering, editing and creating slots and blocks.
+
+`shared/capture-model` contains all the capture model logic, components and stores
+
+`/services/madoc-ts/src/`: \
+`/routes` that holds the directories that contain the middleware connecting Madocs api routes \
+`/router.ts` contains typed routes linking back to functions in `/routes` \
+`/gateway/api.ts` defines all the endpoints in Madoc
+

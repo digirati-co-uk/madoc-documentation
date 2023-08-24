@@ -1,0 +1,79 @@
+import { Codebase } from '../../../components/codebase';
+
+# Task automation
+
+The Tasks API and the queue allow for tasks that require user input to be defined and tracked as users make progress on
+them. The API also allows for tasks to be automated, so that they can be completed without user input. It also offers
+a hook into the task lifecycle, so that you can be notified when a task is completed.
+
+One way to do this is with task automation. This uses a "Bot" to progress or modify tasks. The bot is a class that
+defines a set of compatible tasks and events it should be notified of, and then implements the logic to progress the
+tasks. It also has a set of manual actions that can be displayed and triggered by a user. This allows for a bot to
+be used to automate tasks, but also to allow a task to run batches of tasks.
+
+<Codebase label="Bots">services/madoc-ts/src/automation/bots</Codebase>
+
+## Creating a Bot
+
+Bots must extend the `BaseAutomation` class and can implement the `ManualActions` and/or `TaskAutomation` interfaces.
+
+A bot is like a template. In the Admin interface you will be able to create a bot, assign it a type from a list of
+available bots, and then configure it. The bot will then be able to be used to automate tasks. Bots are the same
+as normal users, so you must also ensure they have the correct site permissions and roles for the task they are doing.
+
+```ts
+export class MyBot extends BaseAutomation implements ManualActions, TaskAutomation {
+
+  // Each bot requires a type, this will be stored in the database and used to identify the bot.
+  static type = 'my-bot';
+
+  getTaskEvents() {
+    return {
+      'crowdsourcing-task': ['assigned'],
+    }
+  }
+
+  async handleTaskEvent(task: CrowdsourcingTask, event: string): Promise<void> {
+    if (task.type === 'crowdsourcing-task' && event === 'assigned') {
+      // Bots have access to an API instance that is authenticated as the bot.
+      this.api.updateTask(task.id, { status: 3 });
+    }
+  }
+
+  async handleManualAction(action: string, data?: any) {
+    if (action === 'do-stuff') {
+      // Do some stuff.
+    }
+  }
+
+  static getManualActions(): ManualAction[] {
+    return [
+      {
+        label: 'Do some stuff',
+        action: 'do-stuff',
+      },
+    ];
+  }
+}
+```
+
+Once the bot is created it can be added to the [bot-definitions.ts](https://github.com/digirati-co-uk/madoc-platform/blob/main/services/madoc-ts/src/automation/bot-definitions.ts)
+
+Here you add the metadata for the bot such as a label, description and thumbnail that will be displayed on the admin.
+You can also define custom configuration that will be passed to the bot, and also the site-role that this bot will require.
+
+You will also need to add the bot to the "bots" list in [automation/index.ts](https://github.com/digirati-co-uk/madoc-platform/blob/main/services/madoc-ts/src/automation/index.ts)
+so that it will be picked up and used when executing tasks.
+
+## Future expansion
+
+At the moment bots will only work on tasks that have been assigned to them. The workflow is to assign a task to a bot,
+and then the bot will be notified of the task and can then progress it. Other parts of Madoc could be expanded in the
+future to use this mechanism. For example, a bot could be used to expire a task after a certain amount of time - this
+would involve assigning the expired task to the bot and then the bot could do various things with it. Different bots
+could do different things with the expired task, for example, one bot could just mark it as expired, another could
+assign it to a different user, and another could delete it.
+
+Bots could also be used to test projects in a system. For example a test bot could be given a project and make random
+contributions to the project and fill out various parts of the capture model. This would allow for testing of the
+review system, the exports at the end of the project and how the project is displayed in the public interface.

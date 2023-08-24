@@ -1,0 +1,21 @@
+import { ConfigOverview } from '../../../components/ConfigOverview/ConfigOverview';
+import { siteConfiguration } from '@madoc.io/config';
+import { ModelEditor } from '../../../components/ModelEditor/ModelEditor';
+
+
+# Search options
+These options change the behaviour of the search and browse pages.
+
+
+<ConfigOverview config={siteConfiguration.search} />
+
+## Example Interface
+
+<ModelEditor
+  template={siteConfiguration.search}
+  data={{
+    navigation: {},
+    searchStrategy: '',
+    searchOptions: {},
+  }}
+/>

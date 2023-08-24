@@ -1,0 +1,19 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "@id": "https://madoc.local/s/stephen/madoc/api/canvases/9666/models?format=open-annotation",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "https://madoc.local/s/stephen/madoc/api/canvases/9666/models/6197388b-9521-41b4-baff-4d80d94bca85",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@type": "cnt:ContentAsText",
+        "chars": "Another"
+      },
+      "madoc:id": 9666,
+      "madoc:selectorId": "b1ea0bd8-ec48-4953-a219-002378291df0",
+      "on": "https://iiif.wellcomecollection.org/presentation/b18035723/canvases/b18035723_0001.JP2#xywh=183,245,2142,700"
+    }
+  ]
+}

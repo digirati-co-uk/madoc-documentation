@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "static": "next static",
     "start": "next start"
   },
   "repository": {
@@ -17,15 +18,39 @@
     "url": "https://github.com/digirati-co-uk/madoc-documentation/issues"
   },
   "homepage": "https://github.com/digirati-co-uk/madoc-documentation#readme",
+  "resolutions": {
+    "styled-components": "file:shim-modules/styled-components",
+    "react-iiif-vault": "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/4c9f81c5/react-iiif-vault"
+  },
   "dependencies": {
-    "next": "^13.0.6",
-    "nextra": "latest",
-    "nextra-theme-docs": "latest",
+    "@iiif/parser": "https://pkg.csb.dev/IIIF-Commons/parser/commit/9c888e0c/@iiif/parser",
+    "@iiif/presentation-3": "^2.0.5",
+    "@iiif/presentation-3-normalized": "^0.9.7",
+    "@iiif/vault": "https://pkg.csb.dev/IIIF-Commons/vault/commit/4fdd7a3b/@iiif/vault",
+    "@iiif/vault-helpers": "https://pkg.csb.dev/IIIF-Commons/vault-helpers/commit/e9d41f61/@iiif/vault-helpers",
+    "@madoc.io/capture-models": "https://pkg.csb.dev/digirati-co-uk/madoc-platform/commit/1f33ae44/@madoc.io/capture-models",
+    "@madoc.io/components": "https://pkg.csb.dev/digirati-co-uk/madoc-platform/commit/1f33ae44/@madoc.io/components",
+    "@madoc.io/config": "https://pkg.csb.dev/digirati-co-uk/madoc-platform/commit/1f33ae44/@madoc.io/config",
+    "@madoc.io/registry": "https://pkg.csb.dev/digirati-co-uk/madoc-platform/commit/1f33ae44/@madoc.io/registry",
+    "@manifest-editor/iiif-browser": "https://pkg.csb.dev/digirati-co-uk/iiif-manifest-editor/commit/4c25ea4d/@manifest-editor/iiif-browser",
+    "autoprefixer": "^10.4.14",
+    "next": "^13.4.18",
+    "nextra": "^2.11.0",
+    "nextra-theme-docs": "^2.11.0",
+    "postcss": "^8.4.28",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-functional-select": "3.3.3",
+    "react-iiif-vault": "https://pkg.csb.dev/digirati-co-uk/react-iiif-vault/commit/4c9f81c5/react-iiif-vault",
+    "react-window": "^1.8.9",
+    "sharp": "^0.32.1",
+    "styled-components": "file:shim-modules/styled-components",
+    "styled-components-original": "npm:styled-components@5.3.11",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
     "@types/node": "18.11.10",
+    "prettier": "^3.0.0",
     "typescript": "^4.9.3"
   }
 }
