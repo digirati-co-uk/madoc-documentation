@@ -1,0 +1,87 @@
+# Running Madoc locally
+
+Madoc is made up of multiple services. To make getting started easy, we have created a `docker-compose` file that will start all the services you need to run Madoc locally.
+
+Before getting started, you should make sure you have [Docker](https://www.docker.com/) installed on your machine.
+
+## Downloading the example
+
+To get started, you can download the example from the [Madoc Config](https://github.com/digirati-co-uk/madoc-config) repository.
+
+```bash
+git clone https://github.com/digirati-co-uk/madoc-config.git
+```
+
+alternatively, if you don't have git installed, you can download the repository as a zip file from the GiHub page.
+
+![](/assets/madoc-download.png)
+
+## Generating an installation code
+
+When you start Madoc for the first time you will be prompted for an installation code. This code is used to secure your installation and should be kept secret.
+
+
+In the folder that you downloaded, you will find a `.env` file. You should add the installation code to this file.
+
+```bash
+MADOC_INSTALLATION_CODE='$2b$14$ueEIZDJzwJykrhb2cHP2au7cWgajysfx.QlBS3TGs/qtoENloYGRu'
+```
+
+This can be used for testing, and the code you should enter in the box is simply `password`.
+
+If you want to generated a new code, you will need to ensure you have [Node.js](https://nodejs.org/en/) installed on your machine.
+
+From the folder, if you run the following command:
+
+```bash
+node ./tools/install-code.js
+```
+
+and then follow the instructions, you will be able to generate a new installation code. You can put this into your `.env` file.
+
+## Running Madoc
+
+Once you have set the installation code, you can start Madoc by running the following command:
+
+```bash
+docker-compose up -d
+```
+
+This will start all the services you need to run Madoc. You can access the site by visiting [http://localhost:8878/](http://localhost:8878/).
+
+![](/assets/install-code.jpg)
+
+Here you will be prompted to enter the installation code you set earlier and then choose a username and password for the admin user and details for the default "site" in Madoc. If you used the code provided above, the installation code is `password`.
+
+## Stopping Madoc
+
+To stop Madoc, you can run the following command:
+
+```bash
+docker-compose stop
+```
+
+This will stop all the services that are running. The database will persist, including an files. These volumes are handled by Docker and will be removed if you run `docker-compose down`.
+
+You can see the example [here](https://github.com/digirati-co-uk/madoc-config/blob/main/ec2/docker-compose.yaml) of customising the `docker-compose` with volumes and environment variables, suitable for running on a server on port 80.
+
+## Seeing logs
+
+To see the logs for the services, you can run the following command:
+
+```bash
+docker-compose logs -f
+```
+
+There are a lot of logs, so you can filter by service name, for example the main Madoc web service (`madoc-ts`)
+
+```bash
+docker-compose logs -f madoc-ts
+```
+
+This can be useful for debugging any issues you might have.
+
+## Next steps
+
+Once you have Madoc running, you can start to
+[add content](/admin-guide/managing-iiif/importing) to your site and follow the admin guide to get started.
