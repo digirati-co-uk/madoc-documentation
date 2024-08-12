@@ -80,6 +80,26 @@ having to deploy a new version of Madoc.
 
 ![](</assets/create-term.gif>)
 
+Once created the pattern for the url is:
+```
+/s/:slug/madoc/api/term-proxy/:id
+```
+
+And for the model you will need:
+```
+?q=%
+```
+on the end of the URL. The slug is whatever the madoc site is (e.g. /s/default) and the id  should be available from the URL on the admin:
+For example, the Admin url for this example:
+```
+https://madoc.example.org/s/default/admin/configure/site/terms/0cb2575d-30f8-4aad-8e60-7d4e21ed154b
+```
+Would be:
+```
+https://madoc.example.org/s/default/madoc/api/term-proxy/0cb2575d-30f8-4aad-8e60-7d4e21ed154b?q=%
+```
+Which you can add to the capture model autocomplete data source field
+
 ### Madoc API sources
 
 There is also a way to configure an autocomplete to use the Madoc API to fetch completions. This is not recommended
