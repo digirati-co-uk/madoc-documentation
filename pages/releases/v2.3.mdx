@@ -1,0 +1,108 @@
+# Madoc v2.3
+
+Madoc v2.3 introduces a new tabular project workflow, improved search, updated review tools, IIIF export improvements,
+and a broad dependency upgrade across the platform. The v2.3.1 patch release follows with fixes for tabular projects,
+non-public site authentication, project configuration saving, localisation, exports, and import feedback.
+
+* **🚀 Tabular projects** - A new structured, spreadsheet-like project template with guided setup, cast-a-net grid
+alignment, split-view contribution, keyboard navigation, copy and paste, dropdown fields, date fields, read-only fields,
+and reviewer tooling for per-cell flags and notes.
+* **🔎 Better search** - Typesense-backed site search adds faster instant results, richer metadata facets, autocomplete,
+better indexing for manifests and canvases, and admin tools for testing the live search index.
+* **✅ Improved review tools** - Review states now better distinguish draft work, continued contribution, human review,
+and unresolved flagged submissions, with approval safeguards for flagged tabular cells.
+* **📦 IIIF and export updates** - Collection, manifest, canvas, CSV, and tabular exports have been improved for
+compatibility, column order, source canvas IDs, CORS behaviour, empty rows, and flag or note alignment.
+* **🔐 Account and access changes** - Non-public sites now use isolated account routes for login, registration, password
+reset, activation, logout, and safe redirect handling.
+* **🛠 Platform refresh** - Madoc has been updated across React 19, React Router 7, TypeScript, ESLint, Storybook,
+the new config service, Docker, CI, SSR, request routing, and service-token handling.
+
+### Added
+
+* New tabular project type for workflows where contributors transcribe, describe, classify, or review data in table form.
+* Guided tabular setup flow for project details, contributor settings, model design, cast-a-net grid alignment, preview,
+and completion.
+* Split-view tabular contribution and review experience, combining canvas reference images with editable table data.
+* Full-table mode, keyboard navigation, copy and paste, dropdown fields, date fields, read-only fields, reference-image
+row tracking, and improved save and draft states for tabular projects.
+* Per-cell flagging, reviewer notes, flagged-cell counts, and approval blocking while unresolved flagged cells remain.
+* Typesense-backed site search with instant results, metadata facets, autocomplete, and improved manifest and canvas
+indexing.
+* Admin search playground for validating the live search index.
+* Queue inspector for monitoring background jobs, search indexing, worker state, and queued work.
+* Separate account routes for non-public sites, covering login, registration, forgot password, reset password, account
+activation, logout, and redirect handling.
+* `trusted-user` site role for reviewer assignment and protected profile visibility workflows.
+* Markdown page block image uploads.
+* Project-template import from URL, URN, or uploaded JSON, plus duplicate and shareable tabular setup flows.
+* Public site root IIIF collection endpoint and `madoc:id` fields in exported IIIF collections, manifests, and canvases.
+* Optional debug timing output for JSON/API responses and source manifest builds when debug mode is requested.
+* SVG site theme restored.
+* Collection-import task feedback showing imported versus expected manifest counts, with warning states for stopped or
+incomplete manifest imports.
+* New Node-based `config-service` with scoped configuration APIs, schema validation, version history, Docker support,
+and tests.
+
+### Changed
+
+* Core frontend and tooling dependencies were upgraded across `madoc-ts`, including React 19, React Router 7,
+TypeScript, ESLint, Storybook, and related package migrations.
+* Search now falls back to the legacy search interface when Typesense is unavailable or disabled.
+* Full reindexing now clears older queued search-index tasks before starting a fresh run.
+* Project administration, project duplication, setup summaries, configuration help text, and export previews have been
+improved.
+* Review states now better distinguish draft work, continued contribution, human review, and unresolved flagged
+submissions.
+* Project and site configuration merging now preserves nested option groups when configurations are saved, resolved, or
+migrated.
+* Collections now serialize correctly as collections, collection items use the correct routes, and source canvas IDs are
+preserved where possible.
+* Exported manifests include more reliable CORS behaviour and `madoc:id` fields.
+* Public collection browsing now defaults to published-only items, while admins can explicitly request unpublished
+results.
+* CSV and tabular exports better preserve the configured column order, omit empty tabular rows, include tabular system
+fields in copied templates, and keep flag and note data aligned with exported rows and columns.
+* Tabular project setup now applies the setup wizard zoom-tracking value, including when zoom tracking is disabled.
+* The HTML editor has been replaced with a newer rich-text editor.
+* Mirador pages now load through the hosted Mirador embed instead of the old bundled viewer.
+* Deprecated drag-and-drop and select libraries have been replaced with maintained alternatives.
+* Internal request routing, SSR, static page rendering, Docker, CI, PM2 configuration, and service-token handling were
+updated to support the new platform architecture and dependency stack.
+* Removed the extra "Create new project using this template" link from project admin pages to make the duplicate project
+flow clearer.
+
+### Fixed
+
+* Fixed site collections and collection APIs exposing unpublished manifests to public users.
+* Fixed search cleanup so unpublished manifests and canvases are removed from Typesense results instead of remaining as
+stale hits.
+* Fixed tabular saves that could remove filtered or blank rows.
+* Fixed tabular review flags not appearing or persisting correctly.
+* Fixed tabular exports, canvas model exports, column order, empty rows, and flag/note alignment.
+* Fixed project duplication so duplicated projects preserve source configuration and annotation style.
+* Fixed generated PDF options and post-submission random-manifest settings.
+* Fixed localisation preference saving when configurator conflicts occur.
+* Fixed HTML page block creation after dependency updates.
+* Fixed markdown block editing and rendering after the React 19 upgrade.
+* Fixed non-public site redirects and account-route redirect targets.
+* Fixed review dashboard and tabular review layout, sidebar behaviour, fullscreen table mode, row and column
+interactions, flag visibility, approval blocking, and historical flag compatibility.
+* Fixed tabular project wizard back-button behaviour in development and removed noisy console alerts from that flow.
+* Fixed metadata facet editor drag-and-drop behaviour after the dependency migration.
+* Fixed autocomplete integration issues, including stale cached entity suggestions and user autocomplete selection/reset
+behaviour.
+* Fixed project page download and file preview behaviour.
+* Fixed personal notes rendering and save-state flicker.
+* Fixed box and polygon selector behaviour, including drawing and editing stability, marker styling, and region editing
+flow.
+* Fixed atlas and viewer resize handling so canvas position and zoom are preserved more reliably while resizing or
+editing.
+* Fixed logout so it clears all site-scoped JWT cookies and only allows safe relative redirects.
+* Fixed API authentication, service-token signing, and expired-token refresh behaviour after the crypto-stack upgrade.
+* Fixed cast-a-net alignment issues including initial load failures, drag and resize edge cases, overlap problems,
+zoom-tracking drift, and post-edit synchronisation.
+* Fixed IIIF export and embed access with improved serialization compatibility and private-network-friendly CORS
+responses.
+* Fixed dependency compatibility regressions from the upgrade work, including `react-is` and lockfile issues.
+* Fixed local Docker development setup to mount `pnpm-lock.yaml` instead of the old `yarn.lock`.

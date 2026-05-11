@@ -1,12 +1,4 @@
-import { Callout } from 'nextra/components';
-
 # Madoc v2.2
-
-<Callout type="warning">
-**Madoc v2.2 is not yet released.**
-
-This is a preview of the upcoming features. For the latest stable release, see [v2.1](/releases/v2.1).
-</Callout>
 
 ## Overview
 
@@ -23,6 +15,57 @@ This is a preview of the upcoming features. For the latest stable release, see [
 - [Page block translations](/admin-guide/projects/page-blocks/page-block-translations)
 - [Technical changes](#technical-changes)
 
+## Updates since v2.2.0
+
+The v2.2 release series included a number of smaller releases after v2.2.0, up to v2.2.11. These focused on review
+workflow improvements, administration usability, public/private content visibility, selectors, exports, pagination, and
+large-project performance.
+
+### Added
+
+- Experimental polygon, line, line-box, and circle selector options for capture models.
+- New project duplication action and clearer project-template descriptions.
+- New review dashboard filters for manifest tasks, assignee, status, and completed work.
+- Review table column resizing, status filtering, sorting, and filtering.
+- Admin tools to delete all manifests in a collection, delete all contributions on a manifest, and manually complete an
+export zip.
+- Buttons to put submissions in progress into review and view the submission.
+- Grid view for projects, enabled through page blocks.
+- More information on the system status page, request trace information for slow requests, and stale-while-revalidate
+memory caching for slower project queries.
+- Basic Google Analytics page block, continue-to-another-manifest configuration, and manifest/canvas labels in CSV
+exports.
+- "Open in Theseus" links for manifests.
+
+### Changed
+
+- Admin pages now use enhanced pagination and improved content labelling, readability, and action descriptions.
+- The review dashboard and review list table received clearer filtering, sorting, resizing, and usability improvements.
+- Reviews can now publish to a project's curated feed.
+- CSV exports now include original Manifest and Canvas URIs.
+- Public collection browsing and unpublished manifest handling were tightened so public users cannot reach unpublished
+content through search engines or public APIs.
+- Site-wide project configuration, project admin actions, canvas navigation labels, document panel labels, and default
+annotation styles were refined.
+- Project and IIIF dependencies were updated, including `@iiif/helpers`, `@iiif/presentation-3`, `@atlas-viewer/atlas`,
+and `react-iiif-vault`.
+- Server-side rendering was disabled on two review/task pages to improve reliability.
+
+### Fixed
+
+- Fixed manifest granularity capture models not appearing and contribution blocking in manifest granularity projects.
+- Fixed styling regressions in Simple HTML Block and other Tailwind-affected areas.
+- Fixed review dashboard bugs, visual issues, filtering, tooltip behaviour, and wording.
+- Fixed large-project content adding, hiding completed manifests, collection/manifest filtering, and project paging.
+- Fixed URL encoding for IIIF Collections and Manifests and CORS for annotation and embed pages.
+- Fixed unpublished manifests being reachable through public indexing.
+- Fixed Atlas Viewer and Canvas Panel memory leaks, selector visibility, polygon selection, broken cropped-selector
+images, and max-over-zoom behaviour.
+- Fixed registration with invitations, token refreshing, activity stream pagination, locale headings, max contributor
+detection, and invalid user email migration.
+- Fixed deleting all contributions, marking canvases or manifests incomplete, and unassigning manifest tasks.
+- Fixed project feedback not working for all users, model root bugs with empty submissions, and stale review task
+refreshing.
 
 ## Technical changes
 There are some technical changes that have been made in this release that may affect you if you are developing plugins
