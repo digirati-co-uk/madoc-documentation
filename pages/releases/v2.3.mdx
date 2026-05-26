@@ -4,7 +4,7 @@ Madoc v2.3 introduces a new tabular project workflow, improved search, updated r
 and a broad dependency upgrade across the platform. The v2.3.1 patch release follows with fixes for tabular projects,
 non-public site authentication, project configuration saving, localisation, exports, and import feedback.
 
-* **🚀 Tabular projects** - A new structured, spreadsheet-like project template with guided setup, cast-a-net grid
+* **🚀 Tabular projects** - A new structured, spreadsheet-like project template with guided setup, table row tracking
 alignment, split-view contribution, keyboard navigation, copy and paste, dropdown fields, date fields, read-only fields,
 and reviewer tooling for per-cell flags and notes.
 * **🔎 Better search** - Typesense-backed site search adds faster instant results, richer metadata facets, autocomplete,
@@ -21,7 +21,7 @@ the new config service, Docker, CI, SSR, request routing, and service-token hand
 ### Added
 
 * New tabular project type for workflows where contributors transcribe, describe, classify, or review data in table form.
-* Guided tabular setup flow for project details, contributor settings, model design, cast-a-net grid alignment, preview,
+* Guided tabular setup flow for project details, contributor settings, model design, table row tracking alignment, preview,
 and completion.
 * Split-view tabular contribution and review experience, combining canvas reference images with editable table data.
 * Full-table mode, keyboard navigation, copy and paste, dropdown fields, date fields, read-only fields, reference-image
@@ -100,7 +100,7 @@ flow.
 editing.
 * Fixed logout so it clears all site-scoped JWT cookies and only allows safe relative redirects.
 * Fixed API authentication, service-token signing, and expired-token refresh behaviour after the crypto-stack upgrade.
-* Fixed cast-a-net alignment issues including initial load failures, drag and resize edge cases, overlap problems,
+* Fixed table row tracking alignment issues including initial load failures, drag and resize edge cases, overlap problems,
 zoom-tracking drift, and post-edit synchronisation.
 * Fixed IIIF export and embed access with improved serialization compatibility and private-network-friendly CORS
 responses.
