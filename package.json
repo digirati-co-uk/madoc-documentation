@@ -34,7 +34,7 @@
     "@madoc.io/registry": "https://pkg.csb.dev/digirati-co-uk/madoc-platform/commit/1f33ae44/@madoc.io/registry",
     "@manifest-editor/iiif-browser": "https://pkg.csb.dev/digirati-co-uk/iiif-manifest-editor/commit/4c25ea4d/@manifest-editor/iiif-browser",
     "autoprefixer": "^10.4.14",
-    "next": "^13.4.18",
+    "next": "^13.5.0",
     "nextra": "^2.11.0",
     "nextra-theme-docs": "^2.11.0",
     "postcss": "^8.4.28",
