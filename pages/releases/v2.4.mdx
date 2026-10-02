@@ -7,7 +7,7 @@ refinements to contribution, review, and administration experiences. The v2.4.1 
 * **🔍 Enhanced project search** - Configurable project-level search experiences with administrator-managed tabs, facets, result layouts, resource filters, and improved project-specific discovery.
 * **⚙️ Enhancements to project administration** - Import and export project configurations, settings, and templates, along with richer project updates and improved import workflows.
 * **🖼️ Improved contributor experience** - Resizable workspace to enable more use of available screen space, image rotation, improved review layouts, and enhanced manifest navigation.
-* **📊 Additional tabular project tooling** - New multi-cell copy/paste controls, image margin alignment tools, image grid adjustment, and improved row-tracking behaviour. Addition of tabular data project model editing to allow in-flight project updating of instructions and help text.
+* **📊 Additional tabular project tooling** - New multi-cell copy/paste controls, image margin alignment tools, image grid adjustment, and improved table row-tracking behaviour. Addition of tabular data project model editing to allow in-flight project updating of instructions and help text.
 * **🎨 Site configuration and branding** - New accent colour configuration, enhanced navigation controls, and improved presentation options throughout the platform.
 * **✅ Reliability and quality improvements** - Extensive fixes across contribution workflows, capture models, imports, search indexing, editor functionality, and project updates.
 
@@ -66,3 +66,118 @@ An optional Save for later button can now be displayed alongside the standard su
 Improvements to import and export project configurations as JSON. Imported settings are safely merged while preserving protected project values, making it easier to replicate project setups, share configurations between environments, and maintain consistent project structures.
 
 Global and site settings can also be imported and exported, with improved handling for project template types when templates are re-imported.
+
+
+## Changed
+
+### Collection and manifest import workflows
+
+Collection and manifest importing has been significantly improved with:
+
+* Automatic retry handling
+* Better reporting of failed imports
+* Clearer progress feedback
+* Import status filtering
+* Pagination support
+* The ability to retry failed manifest imports
+
+These enhancements make large-scale ingest workflows more manageable and transparent.
+
+### Review and contribution experience
+
+Capture-model contribution and review screens have been refined with:
+
+* Clearer field presentation
+* Improved layouts
+* Better handling of linked autocomplete values
+
+The review dashboard now opens directly into the newer review listing experience, helping reviewers access outstanding work more quickly.
+
+### Manifest project usability
+
+Manifest projects benefit from improved canvas navigation on smaller screens, with new canvas selection tools and previous/next navigation options available during review.
+
+### Search and discovery improvements
+
+Search facet labels have been redesigned for improved readability, while facet groups that contain no available options are automatically hidden to reduce visual clutter.
+
+Search indexing reliability has also been improved to ensure search results remain synchronized with project, collection, and resource changes.
+
+### Accessibility and localisation
+
+Accessibility improvements include:
+
+* Better keyboard support for column-description tooltips
+* Improved tooltip usability
+* Enhanced translation refresh behaviour across sites, accounts, and administration areas
+
+Updated English, Welsh, and Dutch language catalogues are included.
+
+### User interface refinements
+
+Additional usability improvements include:
+
+* Increased tabular column heading limits
+* A clearer Personal Notes icon
+* Enhanced status indicators for manifests and canvases
+* Improved handling of changes-requested workflows
+
+## Fixed
+
+### Contribution and review workflow fixes
+
+A number of issues affecting contributor workflows have been resolved, including:
+
+* Draft submissions disappearing after save
+* Incorrect contribution expiry handling
+* Reviewer-requested changes being shown as completed work
+* Capture-model revision updates losing field ordering or nested properties
+* Capture-model checkbox values not being saved correctly (v2.4.1)
+
+### Tabular project fixes
+
+Several fixes improve the stability and accuracy of tabular projects:
+
+* Correct CSV exports with complete column sets
+* Preservation of blank rows in exports
+* Correct annotation positioning after publication
+* Improved image alignment behaviour
+* Improved row tracking during zooming and alignment adjustments
+
+### Capture-model fixes
+
+A range of capture-model editing issues have been addressed, including:
+
+* Field focus being lost during editing
+* Optional-region validation problems
+* Missing field headings
+* Autocomplete placeholder issues
+
+### Content editing fixes
+
+Reliability improvements have been made across:
+
+* HTML blocks
+* Markdown blocks
+* Link creation workflows
+* Rich-text editor loading
+* Spacer and divider rendering
+
+### Site and account fixes
+
+Resolved issues include:
+
+* Duplicate site titles appearing in themed headers
+* Incorrect site identification on account pages
+* Activity-feed links
+* External client access
+* Footer logo links
+
+### Search, IIIF, and resource fixes
+
+Additional fixes include:
+
+* IIIF Browser integration improvements
+* Manifest previews showing accurate page totals
+* More reliable search indexing
+* Updated user-facing IIIF Browser labels
